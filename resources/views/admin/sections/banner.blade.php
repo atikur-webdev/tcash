@@ -1,0 +1,68 @@
+@extends('admin.layouts.master')
+
+@section('content')
+    <div class="container content-management-edit">
+        <div class="banner-header d-flex justify-content-between">
+            <h2>Banner section</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bannerModal">+ Add new</button>
+        </div>
+
+        <div class="mt-7 bg-white">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Images</th>
+                        <th>Sub Title</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($sectionElements as $element)
+                        <tr>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $element->data_value->file }}</td>
+                            <td>{{ $element->data_value->subtitle }}</td>
+                            <td>{{ $element->data_value->title }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endsection
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="bannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Banner section</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.section.update', ['key' => 'banner']) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="image">Image</label>
+                            <input type="file" id="image" name="file" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subtitle">Subtitle </label>
+                            <input type="text" id="subtitle" name="subtitle" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="title">Title </label>
+                            <input type="text" id="title" name="title" class="form-control">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
