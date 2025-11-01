@@ -14,12 +14,41 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $section = Section::query();
 
-        $aboutSectionElements =(clone $section)->where('data_key','banner-element')->get();
+        $bannerElements = Section::where('data_key', 'banner-element')->get();
 
-        $aboutSectionContent = $section->where('data_key', 'banner-content')->first();
+        $bannerContent = Section::where('data_key', 'banner-content')->first();
 
-        return view('home', compact('aboutSectionElements', 'aboutSectionContent'));
+        $aboutElements = Section::where('data_key', 'about-element')->get();
+
+        $aboutContent = Section::where('data_key', 'about-content')->first();
+
+        $featureContent = Section::where('data_key', 'feature-content')->first();
+
+        $statisticElement = Section::where('data_key', 'statistic-element')->get();
+
+        $chooseContent = Section::where('data_key', 'choose-content')->first();
+
+        $chooseElement = Section::where('data_key', 'choose-element')->get();
+
+        $serviceContent = Section::where('data_key', 'service-content')->first();
+
+        $serviceElement = Section::where('data_key', 'service-element')->get();
+
+        $projectContent = Section::where('data_key', 'project-content')->first();
+
+        $projectElement = Section::where('data_key', 'project-element')->get();
+
+        $teamContent = Section::where('data_key', 'team-content')->first();
+
+        $teamElement = Section::where('data_key', 'team-element')->get();
+
+        $testimonialContent = Section::where('data_key', 'testimonial-content')->first();
+
+        $testimonialElement = Section::where('data_key', 'testimonial-element')->get();
+
+        $footerContent = Section::where('data_key', 'footer-content')->first();
+
+        return view('home', compact('bannerElements', 'bannerContent', 'aboutElements', 'aboutContent', 'featureContent', 'statisticElement', 'chooseContent', 'chooseElement', 'serviceContent', 'serviceElement', 'projectContent', 'projectElement', 'teamContent', 'teamElement', 'testimonialContent', 'testimonialElement', 'footerContent'));
     }
 }

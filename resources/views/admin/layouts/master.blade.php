@@ -2,7 +2,7 @@
 @section('panel')
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed" style="background-color: #f1f3f3;">
+        data-sidebar-position="fixed" data-header-position="fixed">
 
         <!-- Sidebar Start -->
         @include('admin.partials.sidebar')

@@ -16,7 +16,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
                             <span>
-                                <i class="ti ti-layout-dashboard"></i>
+                                <i class="fa fa-home"></i>
                             </span>
                             <span class="hide-menu">Dashboard</span>
                         </a>
@@ -24,7 +24,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('admin.section.list') }}" aria-expanded="false">
                             <span>
-                                <i class="fa fa-home"></i>
+                               <i class="fas fa-layer-group"></i> 
                             </span>
                             <span class="hide-menu">Sections</span>
                         </a>

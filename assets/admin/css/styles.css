@@ -5,9 +5,7 @@
  * Copyright 2011-2022 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-@import "../../assets/libs/node_modules/simplebar/dist/simplebar.css";
-@import "../libs/simplebar/dist/simplebar.css";
-@import "../css/icons/tabler-icons/tabler-icons.css";
+
 :root,
 [data-bs-theme="light"] {
     --bs-blue: #5d87ff;
@@ -17140,7 +17138,8 @@ ul {
 
 /* our custom css star here */
 .content-management {
-    background-color: #ededed94;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 .content-management h1 {
@@ -17158,19 +17157,18 @@ ul {
 .content-wrapper a {
     padding: 5px 40px;
     font-size: 18px;
-    background-color: #e7e1e14a;
     border-radius: 5px;
-    color: rgb(52, 73, 94);
-    border: 1px solid #ccc;
     font-weight: bold;
 }
-.content-wrapper a:hover {
-    background: #e7e7e7;
-}
+
 
 .content-management-edit {
     background-color: white;
     padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.admin-table {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .content-management-edit h2 {
     font-size: 20px;
@@ -17179,3 +17177,31 @@ ul {
     margin-top: 25px;
 }
 /* our custom css end here */
+
+/* My custom css here  */
+.banner_table_image {
+    border-radius: 50% !important;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+}
+
+.about_table_edit {
+    padding: 5px;
+}
+.about_table_edit i {
+        font-size: 17px;
+    color: #ffac6f;
+}
+
+.about_table_delete i {
+        font-size: 17px;
+    color: #fb7777;
+}
+.about_table_edit:hover {
+    color: #ffac6f;
+}
+.table_image {
+    width: 43px;
+    border-radius: 5px;
+}
