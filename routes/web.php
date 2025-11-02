@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('about', [HomeController::class, 'viewAbout'])->name('about');
+Route::get('service', [HomeController::class, 'viewService'])->name('service');
+Route::get('contact', [HomeController::class, 'viewContact'])->name('contact');
 
 
 Route::prefix('admin')->middleware('admin.guest')->name('admin.')->group(function () {
@@ -32,6 +35,8 @@ Route::middleware(['admin.auth'])->name('admin.')->prefix('admin')->group(functi
     Route::get('section/edit/team', [SectionController::class, 'viewTeam'])->name('section.edit.team');
     Route::get('section/edit/testimonial', [SectionController::class, 'viewTestimonial'])->name('section.edit.testimonial');
     Route::get('section/edit/footer', [SectionController::class, 'viewFooter'])->name('section.edit.footer');
+    Route::get('section/edit/siteSetting', [SectionController::class, 'siteSetting'])->name('section.edit.siteSetting');
+    Route::get('section/edit/breadcrumb', [SectionController::class, 'viewBreadcrumb'])->name('section.edit.breadcrumb');
     Route::post('section/single/save/{key}', [SectionController::class, 'storeSingle'])->name('section.single.update');
     Route::post('section/save/{key}', [SectionController::class, 'store'])->name('section.save');
 
@@ -44,6 +49,3 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-
-
-// Route::post('section/content/mission/save/{key}', [SectionController::class, 'storeSingle'])->name('section.single.update');

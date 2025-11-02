@@ -4,7 +4,9 @@
             <div class="row g-5">
                 @foreach ($statisticElement as $element)
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                        <i class="fa fa-users fa-3x text-white mb-3"></i>
+                        @php
+                            echo $element->data_value->statistic_icon
+                        @endphp
                         <h1 class="display-4 text-white" data-toggle="counter-up">
                             {{ $element->data_value->statistic_multi_count }}</h1>
                         <span class="fs-5 text-white">{{ $element->data_value->statistic_multi_title }}</span>

@@ -3,21 +3,26 @@
 @section('content')
     <div class="container content-management-edit">
         <div class="banner-header d-flex justify-content-between">
-            <h2>Service section</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal">+ Add new</button>
+            <h2>Breadcrumb section</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal">+ Add new</button>
         </div>
-        <form action="{{ route('admin.section.single.update', ['key' => 'service']) }}" method="POST">
+        <form action="{{ route('admin.section.single.update', ['key' => 'about']) }}" method="POST">
             @csrf
             <div class="mb-3">
                 <div class="mb-2">
-                    <label class="form-label" for="title">Service Title</label>
-                    <input type="text" id="title" name="service_title"
-                        value="{{ $sectionContent->data_value->service_title ?? '' }}" class="form-control">
+                    <label class="form-label" for="title">About Title</label>
+                    <input type="text" id="title" name="about_title"
+                        value="{{ $sectionContent->data_value->about_title ?? '' }}" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label" for="heading">Service Heading</label>
-                    <input type="text" id="heading" name="service_heading"
-                        value="{{ $sectionContent->data_value->service_heading ?? '' }}" class="form-control">
+                    <label class="form-label" for="heading">About Heading</label>
+                    <input type="text" id="heading" name="aboutHeading"
+                        value="{{ $sectionContent->data_value->aboutHeading ?? '' }}" class="form-control">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label" for="content">About Content</label>
+                    <textarea type="text" id="content" name="aboutContent" class="form-control">{{ $sectionContent->data_value->aboutContent ?? '' }}</textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
@@ -29,9 +34,7 @@
             <thead>
                 <tr>
                     <th>SL</th>
-                    <th>Tab Name</th>
-                    <th>Tab Image</th>
-                    <th>Tab Heading</th>
+                    <th>Tab Title</th>
                     <th>Tab Content</th>
                     <th>Action</th>
                 </tr>
@@ -41,10 +44,6 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $element->data_value->tab_name }}</td>
-                        <td>
-                            <img src="{{ asset('assets/images/'.$element->data_value->file) }}" alt="" class="table_image">
-                        </td>
-                        <td>{{ $element->data_value->tab_heading }}</td>
                         <td>{{ $element->data_value->tab_content }}</td>
                         <td>
                             <a href="javascript:void(0)" class="about_table_edit btnEdit"
@@ -65,31 +64,23 @@
     </div>
 
     <!-- Modal for add-->
-    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Service Section</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">About our plan</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.section.save', ['key' => 'service']) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.section.save', ['key' => 'about']) }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="tabName">Tab Name</label>
-                            <input type="text" id="tabName" name="tab_name" class="form-control">
+                            <label class="form-label" for="story">Tab Name</label>
+                            <input type="text" id="story" name="tab_name" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="tabImage">Tab Image</label>
-                            <input type="file" name="file" class="form-control" id="tabImage">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tabHeading">Tab Heading</label>
-                            <input type="text" id="tabHeading" name="tab_heading" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tabContent">Tab Content</label>
-                            <input type="text" id="tabContent" name="tab_content" class="form-control">
+                            <label class="form-label" for="extraStory">Tab Content</label>
+                            <textarea type="text" id="extraStory" name="tab_content" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -110,23 +101,14 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post">
                     @csrf
                     @method('put')
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label" for="story">Tab Name</label>
                             <input type="text" id="story" name="tab_name" class="form-control">
-                        </div>
-                          <div class="mb-3">
-                            <label class="form-label" for="tabImage">Tab Image</label>
-                            <input type="file" name="file" id="tabImage" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tabHeading">Tab Heading</label>
-                            <input type="text" id="tabHeading" name="tab_heading" class="form-control">
-                        </div>
-                        <div class="mb-3">
+                            <br>
                             <label class="form-label" for="extraStory">Tab Content</label>
                             <textarea type="text" id="extraStory" name="tab_content" class="form-control"></textarea>
                         </div>
@@ -165,6 +147,7 @@
     </div>
 @endsection
 
+
 @push('scripts')
     <script>
         $('.btnEdit').on('click', function() {
@@ -174,7 +157,6 @@
             const modal = $('#editModal');
 
             modal.find('[name=tab_name]').val(resource.tab_name);
-            modal.find('[name=tab_heading]').val(resource.tab_heading);
             modal.find('[name=tab_content]').val(resource.tab_content);
             modal.find('form').attr('action', action);
             modal.modal('show');

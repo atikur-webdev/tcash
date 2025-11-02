@@ -20,33 +20,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="project-item pe-5 pb-5">
-                    <div class="project-img mb-3">
-                        <img class="img-fluid rounded" src="{{ asset('assets/user/img/service-2.jpg') }}" alt="">
-                        <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
-                    </div>
-                    <div class="project-title">
-                        <h4 class="mb-0">Cash Investment</h4>
-                    </div>
-                </div>
-                <div class="project-item pe-5 pb-5">
-                    <div class="project-img mb-3">
-                        <img class="img-fluid rounded" src="{{ asset('assets/user/img/service-3.jpg') }}" alt="">
-                        <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
-                    </div>
-                    <div class="project-title">
-                        <h4 class="mb-0">Financial Consultancy</h4>
-                    </div>
-                </div>
-                <div class="project-item pe-5 pb-5">
-                    <div class="project-img mb-3">
-                        <img class="img-fluid rounded" src="{{ asset('assets/user/img/service-4.jpg') }}" alt="">
-                        <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
-                    </div>
-                    <div class="project-title">
-                        <h4 class="mb-0">Business Loans</h4>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>

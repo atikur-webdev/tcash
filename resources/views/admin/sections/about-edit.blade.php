@@ -17,7 +17,7 @@
                 <div class="mb-2">
                     <label class="form-label" for="heading">About Heading</label>
                     <input type="text" id="heading" name="aboutHeading"
-                        value="{{ $sectionContent->data_value->aboutContent ?? '' }}" class="form-control">
+                        value="{{ $sectionContent->data_value->aboutHeading ?? '' }}" class="form-control">
                 </div>
 
                 <div class="mb-2">
@@ -77,7 +77,8 @@
                         <div class="mb-3">
                             <label class="form-label" for="story">Tab Name</label>
                             <input type="text" id="story" name="tab_name" class="form-control">
-                            <br>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="extraStory">Tab Content</label>
                             <textarea type="text" id="extraStory" name="tab_content" class="form-control"></textarea>
                         </div>

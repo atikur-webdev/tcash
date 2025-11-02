@@ -15,6 +15,7 @@
                     <th>SL</th>
                     <th>Statistic Count</th>
                     <th>Statistic Title</th>
+                    <th>Statistic Icon</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -26,6 +27,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $element->data_value->statistic_multi_count }}</td>
                         <td>{{ $element->data_value->statistic_multi_title }}</td>
+                        <td>{{ $element->data_value->statistic_icon }}</td>
                         <td>
                             <a href="javascript:void(0)" class="about_table_edit btnEdit"
                                 data-action="{{ route('admin.section.update', ['id' => $element->id]) }}"
@@ -63,9 +65,14 @@
                                 <input type="text" id="countOne" name="statistic_multi_count"
                                     class="form-control">
                             </div>
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <label class="form-label" for="titleOne">Statistic Title</label>
                                 <input type="text" id="titleOne" name="statistic_multi_title"
+                                    class="form-control">
+                            </div>
+                            <div class="mb-5">
+                                <label class="form-label" for="icon">Statistic Icon</label>
+                                <input type="text" id="icon" name="statistic_icon"
                                     class="form-control">
                             </div>
                         </div>
@@ -95,9 +102,14 @@
                         <div class="mb-3">
                             <label class="form-label" for="story">Statistic Count</label>
                             <input type="text" id="story" name="statistic_multi_count" class="form-control">
-                            <br>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="extraStory">Statistic Title</label>
                             <textarea type="text" id="extraStory" name="statistic_multi_title" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="icon">Statistic Icon</label>
+                            <input type="text" id="icon" name="statistic_icon" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -146,8 +158,9 @@
 
             const modal = $('#editModal');
 
-            modal.find('[name=statistic_multi_count]').val(resource.statistic_multi_count);
+            modal.find('[name=statistic]').val(resource.statistic_multi_count);
             modal.find('[name=statistic_multi_title]').val(resource.statistic_multi_title);
+            modal.find('[name=statistic_icon]').val(resource.statistic_icon);
             modal.find('form').attr('action', action);
             modal.modal('show');
         })

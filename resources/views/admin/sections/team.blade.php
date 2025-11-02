@@ -15,7 +15,7 @@
                         value="{{ $sectionContent->data_value->team_title ?? '' }}" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label" for="teamImage">Team Heading</label>
+                    <label class="form-label" for="teamHeading">Team Heading</label>
                     <input type="text" id="teamHeading" name="team_heading"
                         value="{{ $sectionContent->data_value->team_heading ?? '' }}" class="form-control">
                 </div>
@@ -44,7 +44,6 @@
                         <td>{{ $element->data_value->team_name }}</td>
                         <td>
                             <img src="{{ asset('assets/images/' . $element->data_value->file) }}" class="table_image">
-
                         </td>
                         <td>{{ $element->data_value->team_facebook_link }}</td>
                         <td>{{ $element->data_value->team_twitter_link }}</td>

@@ -13,9 +13,7 @@ class SectionController extends Controller
     public function list()
     {
         $pageTitle = 'Sections';
-
         $sections = Section::get();
-
         return view('admin.sections.list', compact('pageTitle', 'sections'));
     }
 
@@ -23,8 +21,6 @@ class SectionController extends Controller
     {
         $pageTitle = 'Banner';
         $sectionElements = Section::where('data_key', "banner-element")->get();
-        // $sectionContent = Section::where('data_key', $key . "-content")->first();
-
         return view('admin.sections.banner', compact('pageTitle', 'sectionElements'));
     }
 
@@ -33,16 +29,14 @@ class SectionController extends Controller
         $pageTitle = 'About Section';
         $sectionElements = Section::where('data_key', "about-element")->get();
         $sectionContent = Section::where('data_key', "about-content")->first();
-
         return view('admin.sections.about-edit', compact('pageTitle', 'sectionElements', 'sectionContent'));
     }
 
     public function viewFeature()
     {
         $pageTitle = 'Feature Section';
-        $sectionContent = Section::where('data_key', 'feature-content')->first();
-
-        return view('admin.sections.feature', compact('pageTitle', 'sectionContent'));
+        $sectionElements = Section::where('data_key', 'feature-element')->get();
+        return view('admin.sections.feature', compact('pageTitle', 'sectionElements'));
     }
 
     public function viewStatistic() {
@@ -72,7 +66,6 @@ class SectionController extends Controller
         $sectionContent = Section::where('data_key', 'project-content')->first();
         $sectionElements = Section::where('data_key', 'project-element')->get();
         return view('admin.sections.project', compact('pageTitle', 'sectionContent', 'sectionElements'));
-
     }
 
     public function viewTeam() {
@@ -95,6 +88,20 @@ class SectionController extends Controller
         $sectionElements = Section::where('data_key', 'footer-element')->get();
         return view('admin.sections.footer', compact('pageTitle', 'sectionContent', 'sectionElements'));
     }
+    
+    public function siteSetting() {
+        $pageTitle = 'Site Setting';
+        $sectionContent = Section::where('data_key', 'siteSetting-content')->first();
+        $sectionElements = Section::where('data_key', 'siteSetting-element')->get();
+        return view('admin.sections.site-setting', compact('pageTitle', 'sectionContent', 'sectionElements'));
+    }
+
+    public function viewBreadcrumb() {
+        $pageTitle = 'BreadCrumb Section';
+        $sectionContent = Section::where('data_key', 'breadcrumb-content')->first();
+        $sectionElements = Section::where('data_key', 'breadcrumb-element')->get();
+        return view('admin.sections.breadcrumb', compact('pageTitle', 'sectionContent', 'sectionElements'));
+    }
 
     public function storeSingle(Request $request, $key)
     {
@@ -104,7 +111,7 @@ class SectionController extends Controller
         );
         $section->data_value = $request->except('_token');
         $section->save();
-        return back();
+        return back()->with('success', 'Updated Successfully');
     }
 
     public function store(Request $request, $key)
@@ -127,8 +134,7 @@ class SectionController extends Controller
         $section->data_value = $data;
 
         $section->save();
-
-        return back();
+        return back()->with('success', 'Added Successfully');
     }
 
     public function update(Request $request, $id)
@@ -162,10 +168,10 @@ class SectionController extends Controller
         }
 
         $section->update(['data_value' => $data]);
-        return back();
+        return back()->with('success', 'Edited Successfully');
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $section = Section::findOrFail($id);
 
@@ -179,6 +185,6 @@ class SectionController extends Controller
         }
 
         $section->delete();
-        return back();
+        return back()->with('success', 'Deleted Successfully');
     }
 }

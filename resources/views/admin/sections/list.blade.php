@@ -12,9 +12,13 @@
         </div>
     </div>
 @endsection --}}
+
 @section('content')
-    <div class="content-management">
-        <h1>Content management system</h1>
+<button class="btn btn-primary float-end mb-7" data-bs-toggle="modal" data-bs-target="#serviceModal">Back</button>
+    <div class="container content-management-edit">
+        <div class="banner-header d-flex justify-content-between">
+            <h1>Content Management System section</h1>
+        </div>
         <div class="d-flex flex-wrap gap-3">
             <div class="content-wrapper">
                 <a href="{{ route('admin.section.edit.banner') }}" class="btn btn-outline-primary">
@@ -57,14 +61,24 @@
                     Team Section
                 </a>
             </div>
-              <div class="content-wrapper">
+            <div class="content-wrapper">
                 <a href="{{ route('admin.section.edit.testimonial') }}" class="btn btn-outline-primary">
                     Testimonial Section
                 </a>
             </div>
-             <div class="content-wrapper">
+            <div class="content-wrapper">
                 <a href="{{ route('admin.section.edit.footer') }}" class="btn btn-outline-primary">
                     Footer Section
+                </a>
+            </div>
+            <div class="content-wrapper">
+                <a href="{{ route('admin.section.edit.siteSetting') }}" class="btn btn-outline-primary">
+                  BreadCrumb Section
+                </a>
+            </div>
+            <div class="content-wrapper">
+                <a href="{{ route('admin.section.edit.siteSetting') }}" class="btn btn-outline-primary">
+                  Site Setting Section
                 </a>
             </div>
         </div>
@@ -72,4 +86,3 @@
     </div>
 @endsection
 
-<div>

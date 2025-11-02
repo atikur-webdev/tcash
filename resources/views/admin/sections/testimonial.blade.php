@@ -3,7 +3,7 @@
 @section('content')
     <div class="container content-management-edit">
         <div class="banner-header d-flex justify-content-between">
-            <h2>About section</h2>
+            <h2>Testimonial section</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testimonialModal">+ Add new</button>
         </div>
         <form action="{{ route('admin.section.single.update', ['key' => 'testimonial']) }}" method="POST">

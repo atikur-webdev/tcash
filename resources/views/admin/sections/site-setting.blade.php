@@ -3,21 +3,38 @@
 @section('content')
     <div class="container content-management-edit">
         <div class="banner-header d-flex justify-content-between">
-            <h2>Service section</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal">+ Add new</button>
+            <h2>Sitesetting section</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#siteSetting">+ Add new</button>
         </div>
-        <form action="{{ route('admin.section.single.update', ['key' => 'service']) }}" method="POST">
+        <form action="{{ route('admin.section.single.update', ['key' => 'siteSetting']) }}" method="POST">
             @csrf
             <div class="mb-3">
                 <div class="mb-2">
-                    <label class="form-label" for="title">Service Title</label>
-                    <input type="text" id="title" name="service_title"
-                        value="{{ $sectionContent->data_value->service_title ?? '' }}" class="form-control">
+                    <label class="form-label" for="title">Copyright Site Name</label>
+                    <input type="text" id="title" name="name"
+                        value="{{ $sectionContent->data_value->name ?? '' }}" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label" for="heading">Service Heading</label>
-                    <input type="text" id="heading" name="service_heading"
-                        value="{{ $sectionContent->data_value->service_heading ?? '' }}" class="form-control">
+                    <label class="form-label" for="link">Copyright Site Link</label>
+                    <input type="text" id="link" name="link"
+                        value="{{ $sectionContent->data_value->link ?? '' }}" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="logo">Page Logo</label>
+                    <input type="text" id="logo" name="logo" class="form-control"
+                        value="{{ $sectionContent->data_value->logo }}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label" for="openingTime">Opening Time</label>
+                    <input type="time" class="form-control" id="openingTime" name="opening_time"
+                        value="{{ $sectionContent->data_value->opening_time }}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label" for="closingTime">Closing Time</label>
+                    <input type="time" class="form-control" id="closingTime" name="closing_time"
+                        value="{{ $sectionContent->data_value->closing_time }}">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
@@ -29,10 +46,9 @@
             <thead>
                 <tr>
                     <th>SL</th>
-                    <th>Tab Name</th>
-                    <th>Tab Image</th>
-                    <th>Tab Heading</th>
-                    <th>Tab Content</th>
+                    <th>Social Media Name</th>
+                    <th>Social Link Icon</th>
+                    <th>Social Link</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -40,12 +56,9 @@
                 @foreach ($sectionElements as $element)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $element->data_value->tab_name }}</td>
-                        <td>
-                            <img src="{{ asset('assets/images/'.$element->data_value->file) }}" alt="" class="table_image">
-                        </td>
-                        <td>{{ $element->data_value->tab_heading }}</td>
-                        <td>{{ $element->data_value->tab_content }}</td>
+                        <td>{{ $element->data_value->social_link_name }}</td>
+                        <td>{{ $element->data_value->social_link_name }}</td>
+                        <td>{{ $element->data_value->social_link }}</td>
                         <td>
                             <a href="javascript:void(0)" class="about_table_edit btnEdit"
                                 data-action="{{ route('admin.section.update', ['id' => $element->id]) }}"
@@ -65,31 +78,27 @@
     </div>
 
     <!-- Modal for add-->
-    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="siteSetting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Service Section</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">About our plan</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.section.save', ['key' => 'service']) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.section.save', ['key' => 'siteSetting']) }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="tabName">Tab Name</label>
-                            <input type="text" id="tabName" name="tab_name" class="form-control">
+                            <label class="form-label" for="socialLinkName">Social Link Name</label>
+                            <input type="text" id="socialLinkName" name="social_link_name" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="tabImage">Tab Image</label>
-                            <input type="file" name="file" class="form-control" id="tabImage">
+                            <label class="form-label" for="socialLinkIcon">Social Link icon</label>
+                            <input type="text" id="socialLinkIcon" name="social_link_icon" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="tabHeading">Tab Heading</label>
-                            <input type="text" id="tabHeading" name="tab_heading" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tabContent">Tab Content</label>
-                            <input type="text" id="tabContent" name="tab_content" class="form-control">
+                            <label class="form-label" for="socialLink">Social Link</label>
+                            <input type="text" id="socialLink" name="social_link" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -110,25 +119,21 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post">
                     @csrf
                     @method('put')
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="story">Tab Name</label>
-                            <input type="text" id="story" name="tab_name" class="form-control">
-                        </div>
-                          <div class="mb-3">
-                            <label class="form-label" for="tabImage">Tab Image</label>
-                            <input type="file" name="file" id="tabImage" class="form-control">
+                            <label class="form-label" for="socialLinkName">Social Link Name</label>
+                            <input type="text" id="socialLinkName" name="social_link_name" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="tabHeading">Tab Heading</label>
-                            <input type="text" id="tabHeading" name="tab_heading" class="form-control">
+                            <label class="form-label" for="socialLinkIcon">Social Link icon</label>
+                            <input type="text" id="socialLinkIcon" name="social_link_icon" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="extraStory">Tab Content</label>
-                            <textarea type="text" id="extraStory" name="tab_content" class="form-control"></textarea>
+                            <label class="form-label" for="socialLink">Social Link</label>
+                            <input type="text" id="socialLink" name="social_link" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -165,6 +170,7 @@
     </div>
 @endsection
 
+
 @push('scripts')
     <script>
         $('.btnEdit').on('click', function() {
@@ -173,9 +179,9 @@
 
             const modal = $('#editModal');
 
-            modal.find('[name=tab_name]').val(resource.tab_name);
-            modal.find('[name=tab_heading]').val(resource.tab_heading);
-            modal.find('[name=tab_content]').val(resource.tab_content);
+            modal.find('[name=social_link_name]').val(resource.social_link_name);
+            modal.find('[name=social_link_icon]').val(resource.social_link_icon);
+            modal.find('[name=social_link]').val(resource.social_link);
             modal.find('form').attr('action', action);
             modal.modal('show');
         })

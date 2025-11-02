@@ -42,22 +42,26 @@
                          </div>
                          <div class="border rounded p-4 wow fadeInUp" data-wow-delay="0.1s">
                              <div class="row g-4">
-                                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                                     <div class="h-100">
-                                         <div class="d-flex">
-                                             <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
-                                                 <i class="fa fa-times text-white"></i>
+                                 @foreach ($featureElement as $element)
+                     
+                                     <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+                                         <div class="h-100">
+                                             <div class="d-flex">
+                                                 <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
+                                                    @php
+                                                        echo $element->data_value->feature_icon
+                                                    @endphp
+                                                 </div>
+                                                 <div class="ps-3">
+                                                     <h4>{{ $element->data_value->feature_title }}</h4>
+                                                     <span>{{ $element->data_value->feature_content }}</span>
+                                                 </div>
+                                                 <div class="border-end d-none d-lg-block"></div>
                                              </div>
-                                             <div class="ps-3">
-                                                 <h4>{{ $featureContent->data_value->feature_title_one }}</h4>
-                                                 <span>{{ $featureContent->data_value->feature_content_one }}</span>
-                                             </div>
-                                             <div class="border-end d-none d-lg-block"></div>
+                                             <div class="border-bottom mt-4 d-block d-lg-none"></div>
                                          </div>
-                                         <div class="border-bottom mt-4 d-block d-lg-none"></div>
                                      </div>
-                                 </div>
-                                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
+                                     {{-- <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
                                      <div class="h-100">
                                          <div class="d-flex">
                                              <div class="flex-shrink-0 btn-lg-square rounded-circle bg-primary">
@@ -84,7 +88,8 @@
                                              </div>
                                          </div>
                                      </div>
-                                 </div>
+                                 </div> --}}
+                                 @endforeach
                              </div>
                          </div>
                      </div>
