@@ -48,7 +48,7 @@
                         <td>{{ $element->data_value->card_content }}</td>
                         <td>{{ $element->data_value->card_url }}</td>
                         <td>
-                            <a href="javascript:void(0)" class="about_table_edit btnEditpp"
+                            <a href="javascript:void(0)" class="about_table_edit btnEdit"
                                 data-action="{{ route('admin.section.update', ['id' => $element->id]) }}"
                                 data-resource="{{ json_encode($element->data_value) }}">
                                 <i class="fas fa-edit"></i>
@@ -163,7 +163,7 @@
 
     <script>
         
-        $('.btnEditpp').on('click', function() {
+        $('.btnEdit').on('click', function() {
             const action = $(this).attr('data-action');
             const resource = $(this).data('resource');
 

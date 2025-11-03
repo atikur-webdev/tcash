@@ -17161,7 +17161,6 @@ ul {
     font-weight: bold;
 }
 
-
 .content-management-edit {
     background-color: white;
     padding: 20px;
@@ -17190,12 +17189,12 @@ ul {
     padding: 5px;
 }
 .about_table_edit i {
-        font-size: 17px;
+    font-size: 17px;
     color: #ffac6f;
 }
 
 .about_table_delete i {
-        font-size: 17px;
+    font-size: 17px;
     color: #fb7777;
 }
 .about_table_edit:hover {
@@ -17205,3 +17204,28 @@ ul {
     width: 43px;
     border-radius: 5px;
 }
+
+/* user list show start */
+.user-wrapper {
+    box-shadow: 0px 0px 6px -4px;
+    padding: 20px;
+}
+.user-wrapper h1 {
+    padding-bottom: 18px;
+}
+/* user list show end */
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+.input-wrapper input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-wrapper .amount-type {
+    background: #ccc;
+    color: black;
+    padding: 9px;
+}
+
+/* add balance end */

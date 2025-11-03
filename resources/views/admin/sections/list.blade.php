@@ -1,20 +1,6 @@
 @extends('admin.layouts.master')
 
-{{-- @section('content')
-    <div class="content-management">
-        <h1>Content management system</h1>
-        <div class="content-wrapper">
-            @foreach ($sections as $section)
-                <a href="{{ route('admin.section.edit', $section->id) }}">
-                    {{ $section->name }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-@endsection --}}
-
 @section('content')
-<button class="btn btn-primary float-end mb-7" data-bs-toggle="modal" data-bs-target="#serviceModal">Back</button>
     <div class="container content-management-edit">
         <div class="banner-header d-flex justify-content-between">
             <h1>Content Management System section</h1>
@@ -72,8 +58,8 @@
                 </a>
             </div>
             <div class="content-wrapper">
-                <a href="{{ route('admin.section.edit.siteSetting') }}" class="btn btn-outline-primary">
-                  BreadCrumb Section
+                <a href="{{ route('admin.section.edit.breadcrumb') }}" class="btn btn-outline-primary">
+                  About BreadCrumb
                 </a>
             </div>
             <div class="content-wrapper">

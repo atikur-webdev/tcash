@@ -4,31 +4,25 @@
     <div class="container content-management-edit">
         <div class="banner-header d-flex justify-content-between">
             <h2>Breadcrumb section</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal">+ Add new</button>
         </div>
-        <form action="{{ route('admin.section.single.update', ['key' => 'about']) }}" method="POST">
+        <form action="{{ route('admin.section.single.update', ['key' => 'breadcrumb']) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <div class="mb-2">
-                    <label class="form-label" for="title">About Title</label>
-                    <input type="text" id="title" name="about_title"
-                        value="{{ $sectionContent->data_value->about_title ?? '' }}" class="form-control">
+                    <label class="form-label" for="title">Breadcrumb Title</label>
+                    <input type="text" id="title" name="breadcrumb_title"
+                        value="{{ $sectionContent->data_value->breadcrumb_title ?? '' }}" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label" for="heading">About Heading</label>
-                    <input type="text" id="heading" name="aboutHeading"
-                        value="{{ $sectionContent->data_value->aboutHeading ?? '' }}" class="form-control">
-                </div>
-
-                <div class="mb-2">
-                    <label class="form-label" for="content">About Content</label>
-                    <textarea type="text" id="content" name="aboutContent" class="form-control">{{ $sectionContent->data_value->aboutContent ?? '' }}</textarea>
+                    <label class="form-label" for="image">Breadcrumb Image</label>
+                    <input type="file" id="image" name="file"
+                        value="{{ $sectionContent->data_value->file ?? '' }}" class="form-control">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
-
+    {{-- 
     <div class="mt-7 ">
         <table class="table table-striped bg-white admin-table">
             <thead>
@@ -61,10 +55,10 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
+    </div> --}}
 
     <!-- Modal for add-->
-    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -90,11 +84,11 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- Modal for edit-->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,10 +114,10 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal for delete-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header border-bottom">
@@ -144,27 +138,29 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 
 @push('scripts')
     <script>
-        $('.btnEdit').on('click', function() {
-            const action = $(this).attr('data-action');
-            const resource = $(this).data('resource');
+        // $('.btnEdit').on('click', function() {
+        //     const action = $(this).attr('data-action');
+        //     const resource = $(this).data('resource');
 
-            const modal = $('#editModal');
+        //     const modal = $('#editModal');
 
-            modal.find('[name=tab_name]').val(resource.tab_name);
-            modal.find('[name=tab_content]').val(resource.tab_content);
-            modal.find('form').attr('action', action);
-            modal.modal('show');
-        })
-        $('.btnReject').on('click', function() {
-            const action = $(this).attr('data-action');
-            $('#deleteModal').find('form').attr('action', action);
-            $('#deleteModal').modal('show');
-        })
+        //     modal.find('[name=tab_name]').val(resource.tab_name);
+        //     modal.find('[name=tab_content]').val(resource.tab_content);
+        //     modal.find('form').attr('action', action);
+        //     modal.modal('show');
+        // })
+        // $('.btnReject').on('click', function() {
+        //     const action = $(this).attr('data-action');
+        //     $('#deleteModal').find('form').attr('action', action);
+        //     $('#deleteModal').modal('show');
+        // })
+
+    
     </script>
 @endpush

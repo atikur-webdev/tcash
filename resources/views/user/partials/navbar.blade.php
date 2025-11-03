@@ -34,9 +34,11 @@
                    <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
                    <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                    <a href="{{ route('service') }}" class="nav-item nav-link">Services</a>
+                   <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
                    @auth
-                       <form action="">
-                           <a href="#" class="nav-item nav-link">Logout</a>
+                       <form action="{{ route('user.logout') }}" method="post">
+                           @csrf
+                           <button class="nav-item nav-link logout">Logout</button>
                        </form>
                    @else
                        <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
@@ -51,11 +53,12 @@
                             <a href="404.html" class="dropdown-item">404 Page</a>
                         </div>
                     </div> --}}
-                   <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
+
                </div>
                <div class="d-none d-lg-flex ms-2">
                    @foreach ($siteSettingItems as $item)
-                       <a class="btn btn-light btn-sm-square rounded-circle ms-3" href="{{ $item->data_value->social_link }}">
+                       <a class="btn btn-light btn-sm-square rounded-circle ms-3"
+                           href="{{ $item->data_value->social_link }}">
                            @php
                                echo $item->data_value?->social_link_icon;
                            @endphp

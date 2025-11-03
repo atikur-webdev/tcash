@@ -79,8 +79,9 @@ class HomeController extends Controller
 
         $siteSettingElement = Section::where('data_key', 'siteSetting-element')->get();
 
+        $breadcrumbContent = Section::where('data_key', 'breadcrumb-content')->first();
 
-        return view('about', compact('aboutElements', 'aboutContent', 'featureElement', 'statisticElement', 'teamContent', 'teamElement', 'testimonialContent', 'testimonialElement', 'footerContent', 'siteSettingContent', 'siteSettingElement'));
+        return view('about', compact('aboutElements', 'aboutContent', 'featureElement', 'statisticElement', 'teamContent', 'teamElement', 'testimonialContent', 'testimonialElement', 'footerContent', 'siteSettingContent', 'siteSettingElement', 'breadcrumbContent'));
     }
 
     public function viewService() {
@@ -95,7 +96,9 @@ class HomeController extends Controller
 
         $serviceElement = Section::where('data_key', 'service-element')->get();
 
-        return view('service', compact('siteSettingElement', 'siteSettingContent', 'footerContent', 'serviceContent', 'serviceElement'));
+        $breadcrumbContent = Section::where('data_key', 'breadcrumb-content')->first();
+
+        return view('service', compact('siteSettingElement', 'siteSettingContent', 'footerContent', 'serviceContent', 'serviceElement', 'breadcrumbContent'));
     }
     
     public function viewContact() {
@@ -106,6 +109,8 @@ class HomeController extends Controller
 
         $footerContent = Section::where('data_key', 'footer-content')->first();
 
-        return view('contact', compact('siteSettingContent', 'siteSettingElement', 'footerContent'));
+        $breadcrumbContent = Section::where('data_key', 'breadcrumb-content')->first();
+
+        return view('contact', compact('siteSettingContent', 'siteSettingElement', 'footerContent', 'breadcrumbContent'));
     }
 }

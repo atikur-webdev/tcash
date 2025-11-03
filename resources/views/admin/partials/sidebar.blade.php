@@ -29,6 +29,14 @@
                             <span class="hide-menu">Sections</span>
                         </a>
                     </li>
+                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('admin.user.list') }}" aria-expanded="false">
+                            <span>
+                               <i class="fas fa-user"></i>
+                            </span>
+                            <span class="hide-menu">Users</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

@@ -158,13 +158,13 @@
 
             const modal = $('#editModal');
 
-            modal.find('[name=statistic]').val(resource.statistic_multi_count);
+            modal.find('[name=statistic_multi_count]').val(resource.statistic_multi_count);
             modal.find('[name=statistic_multi_title]').val(resource.statistic_multi_title);
             modal.find('[name=statistic_icon]').val(resource.statistic_icon);
             modal.find('form').attr('action', action);
             modal.modal('show');
         })
-         $('.btnReject').on('click', function() {
+        $('.btnReject').on('click', function() {
             const action = $(this).attr('data-action');
             $('#deleteModal').find('form').attr('action', action);
             $('#deleteModal').modal('show');

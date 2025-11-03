@@ -34,29 +34,41 @@
 </head>
 
 <body>
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
 
-    @yield('panel')
 
-    <!-- JavaScript Libraries -->
-    <script src="{{ asset('assets/user/js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/wow.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/easing.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/owlcarousel.min.js') }}"></script>
-    <script src="{{ asset('assets/user/js/counterup.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/izitoast.min.js') }}"></script>
+        @include('user.partials.user_navbar')
 
-    <!-- Template Javascript -->
-    <script src="{{ asset('assets/user/js/main.js') }}"></script>
 
-    @stack('scripts')
-    <script>
-         const colors = {
-    success: '#28c76f',
-    error: '#eb2222',
-    warning: '#ff9f43',
-    info: '#1e9ff2',
+        <div class="container">
+            @yield('panel')
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<!-- JavaScript Libraries -->
+<script src="{{ asset('assets/user/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/wow.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/easing.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/waypoints.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/owlcarousel.min.js') }}"></script>
+<script src="{{ asset('assets/user/js/counterup.min.js') }}"></script>
+<script src="{{ asset('assets/admin/js/izitoast.min.js') }}"></script>
+
+<!-- Template Javascript -->
+<script src="{{ asset('assets/user/js/main.js') }}"></script>
+
+@stack('scripts')
+<script>
+    const colors = {
+        success: '#28c76f',
+        error: '#eb2222',
+        warning: '#ff9f43',
+        info: '#1e9ff2',
     }
 
     function showNotify(status, message) {
@@ -92,7 +104,7 @@
     @if (session('info'))
         showNotify('info', "{{ session('info') }}");
     @endif
-    </script>
+</script>
 </body>
 
 </html>

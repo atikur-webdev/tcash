@@ -99,8 +99,7 @@ class SectionController extends Controller
     public function viewBreadcrumb() {
         $pageTitle = 'BreadCrumb Section';
         $sectionContent = Section::where('data_key', 'breadcrumb-content')->first();
-        $sectionElements = Section::where('data_key', 'breadcrumb-element')->get();
-        return view('admin.sections.breadcrumb', compact('pageTitle', 'sectionContent', 'sectionElements'));
+        return view('admin.sections.breadcrumb', compact('pageTitle', 'sectionContent'));
     }
 
     public function storeSingle(Request $request, $key)
@@ -109,9 +108,24 @@ class SectionController extends Controller
             ['data_key' => $key . '-content'],
             ['data_value' => []]
         );
+       
         $section->data_value = $request->except('_token');
+
+        $supportedExt = ['jpg', 'jpeg', 'png', 'webp'];
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            if (!in_array($extension, $supportedExt)) {
+                throw new Exception('File not found');
+            }
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move('assets/images/', $fileName);
+            $section->data_value = array_merge((array)$section->data_value ?? [], [
+                'file' => $fileName
+            ]);
+        }
         $section->save();
-        return back()->with('success', 'Updated Successfully');
+        return back()->with('Updated Successfully');
     }
 
     public function store(Request $request, $key)
@@ -134,12 +148,13 @@ class SectionController extends Controller
         $section->data_value = $data;
 
         $section->save();
-        return back()->with('success', 'Added Successfully');
+        return back()->with('Added Successfully');
     }
 
     public function update(Request $request, $id)
     {
         $section = Section::findOrFail($id);
+
         $data = $request->except('_token', '_method');
    
         $supportedExt = ['jpg', 'jpeg', 'png', 'webp'];
@@ -168,7 +183,7 @@ class SectionController extends Controller
         }
 
         $section->update(['data_value' => $data]);
-        return back()->with('success', 'Edited Successfully');
+        return back()->with('Edited Successfully');
     }
 
     public function delete($id)
@@ -185,6 +200,6 @@ class SectionController extends Controller
         }
 
         $section->delete();
-        return back()->with('success', 'Deleted Successfully');
+        return back()->with('Deleted Successfully');
     }
 }

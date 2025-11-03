@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,14 @@ class RegisterController extends Controller
     protected $redirectTo = '/';
 
     public function showRegisterForm() {
-        return view('user.auth.register');
+
+        $siteSettingContent = Section::where('data_key', 'siteSetting-content')->first();
+
+        $siteSettingElement = Section::where('data_key', 'siteSetting-element')->get();
+
+        $footerContent = Section::where('data_key', 'footer-content')->first();
+
+        return view('user.auth.register', compact('siteSettingContent', 'siteSettingElement', 'footerContent'));
     }
     /**
      * Create a new controller instance.

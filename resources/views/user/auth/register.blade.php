@@ -1,45 +1,37 @@
+@extends('user.layouts.master')
+@section('content')
+    <div class="login-wrapper-wrapper">
+        <div class="login-wrapper">
+            <div class="container login-page">
 
-<!DOCTYPE html>
-<html lang="en">
+                <div class="left">
+                    <h1>Finanza</h1>
+                    <p>Create an account to start using the application.</p>
+                </div>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('assets/user/css/login.css') }}">
-    <title>Laravel | Register</title>
-</head>
+                <div class="right">
+                    <h2>Create Account</h2>
 
-<body>
-    <div class="container">
+                    <form method="POST" action="{{ url('register') }}">
+                        @csrf
+                        <input type="text" name="name" placeholder="Full Name" value="" required>
 
-        <div class="left">
-            <h1>Laravel</h1>
-            <p>Create an account to start using the application.</p>
-        </div>
+                        <input type="email" name="email" placeholder="Email Address" value="" required>
 
-        <div class="right">
-            <h2>Create Account</h2>
+                        <input type="password" name="password" placeholder="Password" required>
 
-            <form method="POST" action="{{ url('register') }}">
-               @csrf
-                <input type="text" name="name" placeholder="Full Name" value="" required>
-                
-                <input type="email" name="email" placeholder="Email Address" value="" required>
-                
-                <input type="password" name="password" placeholder="Password" required>
-                
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
 
-                <button type="submit">Sign Up</button>
-            </form>
+                        <button type="submit">Sign Up</button>
+                    </form>
 
-            <div class="switch">
-                Already have an account?
-                <a href="{{ route('login') }}">Login</a>
+                    <div class="switch">
+                        Already have an account?
+                        <a href="{{ route('login') }}">Login</a>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
-</body>
-
-</html>
+@endsection
