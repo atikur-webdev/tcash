@@ -45,6 +45,7 @@ class DashboardController extends Controller
             'send_money_email' => [
                 'required',
                 'email',
+                'nullable',
                 'exists:users,email',
                 function ($attribute, $value, $fail) {
                     if ($value === auth()->user()->email) {
@@ -67,6 +68,7 @@ class DashboardController extends Controller
             $transaction->post_balance = $user->balance;
             $transaction->details = "New balance added";
             $transaction->trx = trxGenerator();
+            $transaction->remarks = $request->remarks;
             $transaction->save();
 
             $receiverUser->balance = $receiverUser->balance + $request->amount;
@@ -79,6 +81,7 @@ class DashboardController extends Controller
             $transaction->post_balance = $user->balance;
             $transaction->details = "New balance added";
             $transaction->trx = trxGenerator();
+            $transaction->remarks = $request->remarks;
             $transaction->save();
             return back()->withSuccess('Send money successful');
         } else {
