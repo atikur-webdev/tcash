@@ -4,29 +4,91 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\Setting;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function dashboard() {
-
-        $siteSettingContent = Section::where('data_key', 'siteSetting-content')->first();
-
-        $siteSettingElement = Section::where('data_key', 'siteSetting-element')->get();
-
-        $footerContent = Section::where('data_key', 'footer-content')->first();
-
-        return view('user.dashboard.dashboard', compact('siteSettingContent', 'siteSettingElement', 'footerContent'));
+    public function dashboard()
+    {
+        return view('user.dashboard.user-dashboard');
     }
 
     public function transaction()
     {
-        $siteSettingContent = Section::where('data_key', 'siteSetting-content')->first();
+        $transactionItems = Transaction::get();
 
-        $siteSettingElement = Section::where('data_key', 'siteSetting-element')->get();
+        $settings = Setting::first();
 
-        $footerContent = Section::where('data_key', 'footer-content')->first();
+        return view('user.dashboard.transaction', compact('settings', 'transactionItems'));
+    }
+    public function viewSendMoney(Request $request)
+    {
 
-        return view('user.dashboard.transaction', compact('siteSettingContent', 'siteSettingElement', 'footerContent'));
+        return view('user.dashboard.send-money');
+    }
+    public function sendMoney(Request $request)
+    {
+        // step 1: validation
+        // step 2: check user balance
+        // step 3: find receiver user by email
+        // step 4: Cut balance from sender user
+        // step 5: Create transaction for sender user
+        // step 6: Add balance to receiver user
+        // step 7: Create transaction for receiver user
+        // step 8: return back with success;
+
+
+        $request->validate([
+            'send_money_email' => [
+                'required',
+                'email',
+                'exists:users,email',
+                function ($attribute, $value, $fail) {
+                    if ($value === auth()->user()->email) {
+                        $fail("You can't send money to your own email address.");
+                    }
+                },
+            ],
+            'amount' => 'required|integer|gt:0'
+        ]);
+        $user = auth()->user();
+        if ($user->balance >= $request->amount) {
+            $receiverUser = User::where('email', '!=', $request->send_money_email)->first();
+            $user->balance = $user->balance - $request->amount;
+            $user->save();
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $request->amount;
+            $transaction->type = '-';
+            $transaction->post_balance = $user->balance;
+            $transaction->details = "New balance added";
+            $transaction->trx = trxGenerator();
+            $transaction->save();
+
+            $receiverUser->balance = $receiverUser->balance + $request->amount;
+            $receiverUser->save();
+
+            $transaction = new Transaction();
+            $transaction->user_id = $receiverUser->id;
+            $transaction->amount = $request->amount;
+            $transaction->type = '+';
+            $transaction->post_balance = $user->balance;
+            $transaction->details = "New balance added";
+            $transaction->trx = trxGenerator();
+            $transaction->save();
+            return back()->withSuccess('Send money successful');
+        } else {
+            return back()->withErrors('Cannot send money with insufficient balance');
+        }
+    }
+    public function sendMoneyHistory()
+    {
+        $user = auth()->user();
+        $transactions = $user->transactions()->paginate();
+        return view('user.dashboard.send-money-history', compact('transactions'));
     }
 }

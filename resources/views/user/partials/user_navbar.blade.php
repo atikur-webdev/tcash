@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+<nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn user-navbar" data-wow-delay="0.1s">
     <a href="{{ route('home') }}" class="navbar-brand ms-4 ms-lg-0">
         <h1 class="display-5 text-primary m-0">Finanza</h1>
     </a>
@@ -13,8 +13,10 @@
                 <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
                     aria-expanded="false">Send Money</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Send Now</a></li>
-                    <li><a class="dropdown-item" href="#">Send Money History</a></li>
+                    <li><a class="dropdown-item" href="{{ route('user.view.send.money') }}">Send
+                            Now</a></li>
+                    <li><a class="dropdown-item" href="{{ route('user.send.money.history') }}">Send Money History</a>
+                    </li>
                 </ul>
             </div>
 

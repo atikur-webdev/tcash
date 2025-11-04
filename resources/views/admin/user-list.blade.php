@@ -28,7 +28,7 @@
                                         data-bs-target="#addBalanceModal" data-action="{{ route('admin.addBalance.send', $user->id )}}">Add Balance</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Subtract Balance</a>
+                                    <a class="dropdown-item btnSubtract" href="javascript:void(0)" data-action="{{ route('admin.subtract.balance', $user->id) }}">Subtract Balance</a>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +43,7 @@
 
 
 
-    <!-- Modal -->
+    <!--Add balance Modal -->
     <div class="modal fade" id="addBalanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -57,12 +57,40 @@
                         <div class="mb-3 input-wrapper">
                             <input type="number" step="any" name="balance" class="form-control"
                                 placeholder="Please provide a positive amount">
-                            <div class="amount-type">USD</div>
+                            <div class="amount-type">{{ $settings->cur_text }}</div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="submit" class="btn btn-primary">Add balance</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+     <!--Subtract balance Modal -->
+    <div class="modal fade" id="subtractBalanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Subtract Balance</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 input-wrapper">
+                            <input type="number" step="any" name="subtract_balance" class="form-control"
+                                placeholder="Please provide a positive amount">
+                            <div class="amount-type">{{ $settings->cur_text }}</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Subtract balance</button>
                     </div>
                 </form>
             </div>
@@ -75,10 +103,16 @@
          $('.btnAdd').on('click', function() {
             const action = $(this).attr('data-action');
             const modal = $('#addBalanceModal');
+            modal.find('form').attr('action', action);
             
             modal.modal('show');
-            console.log(modal);
             
+        })
+        $('.btnSubtract').on('click', function() {
+            const action = $(this).attr('data-action');
+            const modal = $('#subtractBalanceModal');
+            modal.find('form').attr('action', action);
+            modal.modal('show');
         })
     </script>
 @endpush
