@@ -1,6 +1,6 @@
 @extends('user.layouts.dashboard-master')
 @section('panel')
-    <div class="send-money-wrapper">
+    <div class="user-dashboard-items-wrapper">
         <h3>Send Money</h3>
         <form action="{{ route('user.send.money') }}" method="post">
             @csrf

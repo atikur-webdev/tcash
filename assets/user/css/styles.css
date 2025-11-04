@@ -666,12 +666,12 @@ button {
     box-shadow: 0px 0px 7px -4px;
 }
 /* transaction table css end here */
-.send-money-wrapper {
+.user-dashboard-items-wrapper {
     margin-top: 50px;
     box-shadow: 0px 0px 6px -4px;
     padding: 20px;
 }
-.send-money-wrapper h3 {
+.user-dashboard-items-wrapper h3 {
     margin-bottom: 15px;
 }
 

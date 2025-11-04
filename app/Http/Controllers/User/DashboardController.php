@@ -45,7 +45,6 @@ class DashboardController extends Controller
             'send_money_email' => [
                 'required',
                 'email',
-                'nullable',
                 'exists:users,email',
                 function ($attribute, $value, $fail) {
                     if ($value === auth()->user()->email) {
@@ -57,7 +56,8 @@ class DashboardController extends Controller
         ]);
         $user = auth()->user();
         if ($user->balance >= $request->amount) {
-            $receiverUser = User::where('email', '!=', $request->send_money_email)->first();
+            $receiverUser = User::where('email', $request->send_money_email)->first();
+
             $user->balance = $user->balance - $request->amount;
             $user->save();
 
@@ -66,7 +66,7 @@ class DashboardController extends Controller
             $transaction->amount = $request->amount;
             $transaction->type = '-';
             $transaction->post_balance = $user->balance;
-            $transaction->details = "New balance added";
+            $transaction->details = "Send money to {$receiverUser->email}";
             $transaction->trx = trxGenerator();
             $transaction->remarks = $request->remarks;
             $transaction->save();
@@ -79,9 +79,8 @@ class DashboardController extends Controller
             $transaction->amount = $request->amount;
             $transaction->type = '+';
             $transaction->post_balance = $user->balance;
-            $transaction->details = "New balance added";
+            $transaction->details = "Received money from {$user->email}";
             $transaction->trx = trxGenerator();
-            $transaction->remarks = $request->remarks;
             $transaction->save();
             return back()->withSuccess('Send money successful');
         } else {
@@ -90,8 +89,7 @@ class DashboardController extends Controller
     }
     public function sendMoneyHistory()
     {
-        $user = auth()->user();
-        $transactions = $user->transactions()->paginate();
+       $transaction = Transaction::where('user_id', auth()->id)->where('type', '-')->where('details', 'like', 'send money to %')->latest()->get();
         return view('user.dashboard.send-money-history', compact('transactions'));
     }
 }
