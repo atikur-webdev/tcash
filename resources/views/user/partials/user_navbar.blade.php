@@ -19,15 +19,20 @@
                     </li>
                 </ul>
             </div>
-
-            <a href="{{ route('user.view.deposit') }}" class="nav-item nav-link" id="depositDropdown"
-                data-bs-toggle="dropdown" aria-expanded="false">Deposit Money
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="depositDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+        
+             <div class="dropdown">
+                <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">Deposit Money</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.view.deposit') }}">Deposit Money</a></li>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="">Deposit History</a></li>
+                    </li>
+                </ul>
+            </div>
+           
             <a href="{{ route('user.transaction') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Transaction</a>
         </div>
