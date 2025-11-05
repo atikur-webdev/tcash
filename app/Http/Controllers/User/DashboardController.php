@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
 use App\Models\Section;
 use App\Models\Setting;
 use App\Models\Transaction;
@@ -29,6 +30,8 @@ class DashboardController extends Controller
 
         return view('user.dashboard.send-money');
     }
+
+
     public function sendMoney(Request $request)
     {
         // step 1: validation
@@ -39,7 +42,6 @@ class DashboardController extends Controller
         // step 6: Add balance to receiver user
         // step 7: Create transaction for receiver user
         // step 8: return back with success;
-
 
         $request->validate([
             'send_money_email' => [
@@ -87,9 +89,28 @@ class DashboardController extends Controller
             return back()->withErrors('Cannot send money with insufficient balance');
         }
     }
+
+
     public function sendMoneyHistory()
     {
-       $transaction = Transaction::where('user_id', auth()->id)->where('type', '-')->where('details', 'like', 'send money to %')->latest()->get();
+        $transactions = Transaction::where('user_id', auth()->id())->where('type', '-')->latest()->get();
         return view('user.dashboard.send-money-history', compact('transactions'));
+    }
+
+    public function viewDeposit() {
+        return view('user.dashboard.deposit');
+    }
+    public function sendDeposit(Request $request) {
+        $request->validate([
+            'deposit_amount' => 'required|gt:0'
+        ]);
+        $user = auth()->user();
+        $deposits = new Deposit();
+        $deposits->user_id = $user->id;
+        $deposits->amount = $request->deposit_amount;
+        $deposits->status = '0';
+        $deposits->trx = trxGenerator();
+        $deposits->save();
+        return back()->withSuccess('Your deposit request sent successfully');
     }
 }

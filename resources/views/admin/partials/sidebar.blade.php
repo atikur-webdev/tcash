@@ -24,18 +24,32 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('admin.section.list') }}" aria-expanded="false">
                             <span>
-                               <i class="fas fa-layer-group"></i> 
+                                <i class="fas fa-layer-group"></i>
                             </span>
                             <span class="hide-menu">Sections</span>
                         </a>
                     </li>
-                     <li class="sidebar-item">
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('admin.user.list') }}" aria-expanded="false">
                             <span>
-                               <i class="fas fa-user"></i>
+                                <i class="fas fa-user"></i>
                             </span>
                             <span class="hide-menu">Users</span>
                         </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="#" aria-expanded="false" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span>
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="hide-menu">Deposits</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('admin.deposit.pending') }}">Pending Deposits</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.deposit.success') }}">Successful Depostis</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.show.reject.deposit') }}">Reject Depostis</a></li>
+                        </ul>
                     </li>
                 </ul>
             </nav>

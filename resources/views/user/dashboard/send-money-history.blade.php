@@ -14,7 +14,7 @@
         @foreach ($transactions as $transaction)
             <tr>
                 <td>{{ $transaction->created_at }}</td>
-                <td>{{ str_replace('send money to ', '', $transaction->details) }}</td>
+                <td>{{ $transaction->details }}</td>
                 <td>{{ $transaction->amount }}</td>
                 <td>{{ $transaction->post_balance }}</td>
                 <td>{{ $transaction->remarks }}</td>

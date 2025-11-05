@@ -16508,6 +16508,11 @@ fieldset:disabled .btn {
 .left-sidebar .scroll-sidebar .simplebar-track.simplebar-horizontal {
     visibility: hidden !important;
 }
+/* custom style from me */
+.simplebar-content-wrapper {
+    overflow: unset!important;
+} 
+/* custom style from me */
 .brand-logo {
     min-height: 70px;
     padding: 0 24px;

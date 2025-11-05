@@ -113,4 +113,5 @@ class HomeController extends Controller
 
         return view('contact', compact('siteSettingContent', 'siteSettingElement', 'footerContent', 'breadcrumbContent'));
     }
+   
 }
