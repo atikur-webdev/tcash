@@ -19,20 +19,38 @@
                     </li>
                 </ul>
             </div>
-        
-             <div class="dropdown">
+
+            <div class="dropdown">
                 <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
                     aria-expanded="false">Deposit Money</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li>
-                        <a class="dropdown-item" href="{{ route('user.view.deposit') }}">Deposit Money</a></li>
+                        <a class="dropdown-item" href="{{ route('user.view.deposit') }}">Deposit Money</a>
+                    </li>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="">Deposit History</a></li>
+                        <a class="dropdown-item" href="{{ route('user.deposit.history') }}">Deposit History</a>
+                    </li>
                     </li>
                 </ul>
             </div>
+            <div class="dropdown">
+                <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">Withdraw Money</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.withdraw.view') }}">Withdraw Now</a>
+                    </li>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.withdraw.history') }}">Withdraw History</a>
+                    </li>
+                    </li>
+                </ul>
+            </div>
+
            
+
             <a href="{{ route('user.transaction') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Transaction</a>
         </div>

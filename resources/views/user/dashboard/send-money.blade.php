@@ -10,9 +10,6 @@
             <div class="mb-3">
                 <input type="number" class="form-control" name="amount" placeholder="Enter your amount">
             </div>
-             <div class="mb-3">
-                <input type="text" class="form-control" name="remarks" placeholder="Optional comments">
-            </div>
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Send Money</button>
             </div>

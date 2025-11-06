@@ -7,6 +7,7 @@ use App\Models\Deposit;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -38,6 +39,7 @@ class DashboardController extends Controller
         $transaction->type = '+';
         $transaction->post_balance = $user->balance;
         $transaction->details = "New balance added";
+        $transaction->remarks = 'new_balance_added';
         $transaction->trx = trxGenerator();
         $transaction->save();
 
@@ -61,14 +63,19 @@ class DashboardController extends Controller
         $transaction->post_balance = $user->balance;
         $transaction->details = 'Balance subtracted';
         $transaction->trx = trxGenerator();
+        $transaction->remarks = 'balance_subtracted';
         $transaction->save();
 
         return back()->withSuccess('Balance subtracted successfully');
     }
+    public function allDeposit() {
+        $allDeposits = Deposit::latest()->get();
+        return view('admin.all-deposit', compact('allDeposits'));
+    }
 
-    public function pendingDeposit(Request $request)
+    public function pendingDeposit()
     {
-        $depositRequests = Deposit::where('status', 0)->with('user')->get();
+        $depositRequests = Deposit::where('status', 0)->with('user')->latest()->get();
         return view('admin.pending-deposit', compact('depositRequests'));
     }
 
@@ -88,15 +95,19 @@ class DashboardController extends Controller
         $transaction->type = '+';
         $transaction->post_balance = $user->balance;
         $transaction->details = 'New balance added';
+        $transaction->remarks = 'new_balance_added';
         $transaction->trx = trxGenerator();
         $transaction->save();
 
         return back()->withSuccess('Amount sent successfully');
     }
-    public function rejectDeposit($id) {
-    
+    public function rejectDeposit(Request $request, $id) {
+
         // $rejectDeposit = Deposit::destroy($id);
-        $rejectDeposit = Deposit::where('id', $id)->where('status', 0)->update(['status' => 2]);
+        // $rejectDeposit = Deposit::where('id', $id)->where('status', 0)->update(['status' => 2]);
+        $rejectDeposit = Deposit::where('id', $id)->where('status', 0)->firstOrFail();
+        $rejectDeposit->status = 2;
+        $rejectDeposit->save();
         return back()->withSuccess('Request rejected successfully');
     }
     public function successDeposit() {
@@ -106,5 +117,48 @@ class DashboardController extends Controller
     public function showRejectDeposit() {
         $rejectDeposits = Deposit::where('status', 2)->with('user')->get();
         return view('admin.reject-deposit', compact('rejectDeposits'));
+    }
+    public function allWithdraw() {
+        $allWithdraws = Withdraw::latest()->get();
+        return view('admin.all-withdraw', compact('allWithdraws'));
+    }
+    public function viewPendingWithdraw() {
+        $withdraws = Withdraw::where('status', 0)->latest()->get();
+        return view('admin.pending-withdraw', compact('withdraws'));
+    }
+    public function acceptPendingWithdraw(Request $request, $id) {
+        $withdraws = Withdraw::where('id', $id)->with('user')->where('status', 0)->firstOrFail();
+        $withdraws->status = 1;
+        $withdraws->save();
+        $user = $withdraws->user;
+        $user->balance = $user->balance - $withdraws->amount;
+        $user->save();
+       
+        $transaction = new Transaction;
+        $transaction->user_id = $user->id;
+        $transaction->amount = $withdraws->amount;
+        $transaction->type = '-';
+        $transaction->post_balance = $user->balance;
+        $transaction->details = 'Amount withdrawn';
+        $transaction->trx = trxGenerator();
+        $transaction->remarks = 'withdrawn_successful';
+        $transaction->save();
+
+        return back()->withSuccess('Request accepted successfully');
+
+    }
+    public function rejectWithdraw($id) {
+        $rejectWithdraws = Withdraw::where('id', $id)->where('status', 0)->firstOrFail();
+        $rejectWithdraws->status = 2;
+        $rejectWithdraws->save();
+        return back()->withSuccess('Withdraw request rejected successfully');
+    }
+    public function successWithdraw() {
+        $successWithdraws = Withdraw::where('status', 1)->latest()->get();
+        return view('admin.success-withdraw', compact('successWithdraws'));
+    }
+    public function viewRejectWithdraw() {
+        $rejectWithdraws = Withdraw::where('status', 2)->latest()->get();
+        return view('admin.reject-withdraw', compact('rejectWithdraws'));
     }
 }

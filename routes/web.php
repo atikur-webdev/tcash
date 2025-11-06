@@ -38,11 +38,18 @@ Route::middleware(['admin.auth'])->name('admin.')->prefix('admin')->group(functi
     Route::get('user/list', [DashboardController::class, 'viewUserList'])->name('user.list');
     Route::post('add_balance/send/{id}', [DashboardController::class, 'balanceSend'])->name('addBalance.send');
     Route::post('subtract/balance/{id}',  [DashboardController::class, 'balanceSubtract'])->name('subtract.balance');
+    Route::get('all/deposit', [DashboardController::class, 'allDeposit'])->name('all.deposit');
     Route::get('pending/deposit/list', [DashboardController::class, 'pendingDeposit'])->name('deposit.pending');
     Route::post('pending/deposit/accept/{id}', [DashboardController::class, 'depositAccept'])->name('deposit.accept');
     Route::post('pending/deposit/reject/{id}', [DashboardController::class, 'rejectDeposit'])->name('deposit.reject');
     Route::get('success/deposit', [DashboardController::class, 'successDeposit'])->name('deposit.success');
     Route::get('reject/deposit/page', [DashboardController::class, 'showRejectDeposit'])->name('show.reject.deposit');
+    Route::get('all/withdraw', [DashboardController::class, 'allWithdraw'])->name('allWithdraw');
+    Route::get('pending/withdraw', [DashboardController::class, 'viewPendingWithdraw'])->name('pending.withdraw');
+    Route::post('accept/pending/withdraw/{id}', [DashboardController::class, 'acceptPendingWithdraw'])->name('accept.pending.withdraw');
+    Route::post('reject/pending/withdraw/{id}', [DashboardController::class, 'rejectWithdraw'])->name('reject.pending.withdraw');
+    Route::get('success/withdraw', [DashboardController::class, 'successWithdraw'])->name('success.withdraw');
+    Route::get('rejected/withdraw', [DashboardController::class, 'viewRejectWithdraw'])->name('reject.withdraw');
     
 
 
@@ -80,5 +87,10 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
     Route::get('send/money/history', [UserDashboardController::class, 'sendMoneyHistory'])->name('send.money.history');
     Route::get('deposit', [UserDashboardController::class, 'viewDeposit'])->name('view.deposit');
     Route::post('send/deposit/request', [UserDashboardController::class, 'sendDeposit'])->name('send.deposit.request');
+    Route::get('deposit/history', [UserDashboardController::class, 'depositHistory'])->name('deposit.history');
+    Route::get('withdraw/money', [UserDashboardController::class, 'viewWithdraw'])->name('withdraw.view');
+    Route::post('withdraw/now', [UserDashboardController::class, 'withdraw'])->name('withdraw.now');
+    Route::get('withdraw/history', [UserDashboardController::class, 'withdrawHistory'])->name('withdraw.history');
+    
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

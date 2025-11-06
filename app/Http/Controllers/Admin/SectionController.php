@@ -125,7 +125,7 @@ class SectionController extends Controller
             ]);
         }
         $section->save();
-        return back()->with('Updated Successfully');
+        return back()->withSuccess('Updated Successfully');
     }
 
     public function store(Request $request, $key)
@@ -148,7 +148,7 @@ class SectionController extends Controller
         $section->data_value = $data;
 
         $section->save();
-        return back()->with('Added Successfully');
+        return back()->withSuccess('Added Successfully');
     }
 
     public function update(Request $request, $id)
@@ -183,7 +183,7 @@ class SectionController extends Controller
         }
 
         $section->update(['data_value' => $data]);
-        return back()->with('Edited Successfully');
+        return back()->withSuccess('Edited Successfully');
     }
 
     public function delete($id)
@@ -200,6 +200,6 @@ class SectionController extends Controller
         }
 
         $section->delete();
-        return back()->with('Deleted Successfully');
+        return back()->withSuccess('Deleted Successfully');
     }
 }

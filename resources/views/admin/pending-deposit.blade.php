@@ -9,6 +9,7 @@
                 <td>User email</td>
                 <td>Request amount</td>
                 <td>Status</td>
+                <td>Document</td>
                 <td>trx</td>
                 <td>Action</td>
             </tr>
@@ -22,6 +23,11 @@
                         @if ($request->status == 0)
                             <span class="badge bg-warning text-dark">Pending</span>
                         @endif
+                    </td>
+                    <td class="popup-gallery">
+                        <a href="{{ asset($request->document) }}">
+                            <img src="{{ asset($request->document) }}" alt="" class="custom-img_admin">
+                        </a>
                     </td>
                     <td>{{ $request->trx }}</td>
                     <td class="d-flex gap-1">
@@ -71,6 +77,7 @@
                     @csrf
                     <div class="modal-body border">
                         <p>Are you sure to reject this transaction</p>
+                        <input type="text" name="remarks" placeholder="Optional message" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -107,6 +114,5 @@
         $('.reject').on('click', function() {
             modal.find('form').submit();
         })
-        
     </script>
 @endpush

@@ -38,7 +38,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                            <img src="{{ asset('assets/images/'. $element->data_value->file ) }}" alt="" class="table_image">
+                            <img src="{{ asset('assets/images/'. $element->data_value->file ?? '' ) }}" alt="" class="table_image">
                         </td>
                         <td>{{ $element->data_value->project_image_text }}</td>
                         <td>
