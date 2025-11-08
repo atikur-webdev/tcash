@@ -5,7 +5,7 @@
         <h3 class="mb-3">Withdraws History</h3>
         <table class="table table-striped">
             <tr>
-                <td>User id</td>
+                <td>Date</td>
                 <td>Amount</td>
                 <td>Transaction Number</td>
                 <td>Status</td>
@@ -13,7 +13,7 @@
             </tr>
             @foreach ($withdraws as $withdraw)
                 <tr>
-                    <td>{{ $withdraw->user_id }}</td>
+                    <td>{{ $withdraw->created_at }}</td>
                     <td>{{ $withdraw->amount }}</td>
                     <td>{{ $withdraw->transaction_number }}</td>
                     <td>

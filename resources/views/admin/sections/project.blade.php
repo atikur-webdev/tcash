@@ -38,7 +38,10 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                            <img src="{{ asset('assets/images/'. $element->data_value->file ?? '' ) }}" alt="" class="table_image">
+                            @if (isset($element->data_value?->file))
+                                <img src="{{ asset('assets/images/' . $element->data_value?->file ?? '') }}" alt=""
+                                    class="table_image">
+                            @endif
                         </td>
                         <td>{{ $element->data_value->project_image_text }}</td>
                         <td>
@@ -67,7 +70,8 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Add new Project</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('admin.section.save', ['key' => 'project']) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.section.save', ['key' => 'project']) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -152,8 +156,8 @@
 
             const modal = $('#editModal');
             modal.find('[name=project_image_text]').val(resource.project_image_text);
-          
-            
+
+
             modal.find('form').attr('action', action);
             modal.modal('show');
         })
@@ -163,4 +167,4 @@
             $('#deleteModal').modal('show');
         })
     </script>
-@endpush 
+@endpush

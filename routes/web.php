@@ -91,6 +91,12 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
     Route::get('withdraw/money', [UserDashboardController::class, 'viewWithdraw'])->name('withdraw.view');
     Route::post('withdraw/now', [UserDashboardController::class, 'withdraw'])->name('withdraw.now');
     Route::get('withdraw/history', [UserDashboardController::class, 'withdrawHistory'])->name('withdraw.history');
+    Route::get('money/request', [UserDashboardController::class, 'viewMoneyRequest'])->name('view.money.request');
+    Route::post('send/money/request', [UserDashboardController::class, 'sendMoneyRequest'])->name('send.money.request');
+    Route::get('pending/money/request', [UserDashboardController::class, 'pendingMoneyRequest'])->name('pending.money.request');
+    Route::post('accept/pending/money/request/{id}', [UserDashboardController::class, 'acceptMoneyRequest'])->name('accept.pending.money.request');
+    Route::post('reject/pending/money/request/{id}', [UserDashboardController::class, 'rejectMoneyRequest'])->name('reject.pending.money.request');
+    Route::get('money/request/history', [UserDashboardController::class, 'moneyRequestHistory'])->name('money.request.history');
     
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

@@ -6,7 +6,7 @@
         </h3>
         <table class="table table-striped">
             <tr>
-                <td>User id</td>
+                <td>Date</td>
                 <td>User name</td>
                 <td>User email</td>
                 <td>Amount</td>
@@ -16,7 +16,7 @@
             </tr>
             @foreach ($allDeposits as $deposit)
                 <tr>
-                    <td>{{ $deposit->user->id }}</td>
+                    <td>{{ $deposit->created_at }}</td>
                     <td>{{ $deposit->user->name }}</td>
                     <td>{{ $deposit->user->email }}</td>
                     <td>{{ $deposit->amount }}</td>

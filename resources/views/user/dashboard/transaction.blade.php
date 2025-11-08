@@ -6,19 +6,21 @@
     <table class="table table-striped transaction-table">
         <tr>
             <td>
-                User_id
+                Date
             </td>
             <td>Amount</td>
+            <td>Currency</td>
             <td>Type</td>
-            <td>Post_Balance</td>
+            <td>Post balance</td>
             <td>Details</td>
             <td>trx</td>
             <td>Remarks</td>
         </tr>
        @foreach ($transactionItems as $item)
            <tr>
-            <td>{{ $item->user_id }}</td>
+            <td>{{ $item->created_at }}</td>
             <td>{{ $item->amount }}</td>
+            <td>{{ siteCurrency()->cur_sym }}</td>
             <td>{{ $item->type }}</td>
             <td>{{ $item->post_balance }}</td>
             <td>{{ $item->details }}</td>

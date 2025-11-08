@@ -1,50 +1,46 @@
-@extends('admin.layouts.master')
-@section('content')
-    <div class="user-wrapper">
-        <h3 class="mb-3">Pending Deposits</h3>
+@extends('user.layouts.dashboard-master')
+@section('panel')
+    <div class="user-dashboard-items-wrapper">
+        <h3>Money request history</h3>
         <table class="table table-striped">
             <tr>
-                <td>Date</td>
+                <td>User id</td>
                 <td>User name</td>
                 <td>User email</td>
                 <td>Request amount</td>
                 <td>Status</td>
-                <td>Document</td>
                 <td>trx</td>
                 <td>Action</td>
             </tr>
-            @foreach ($depositRequests as $request)
+            @foreach ($moneyRequests as $moneyRequest)
                 <tr>
-                    <td>{{ $request->created_at }}</td>
-                    <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->user->email }}</td>
-                    <td>{{ $request->amount }}</td>
+                    <td>{{ $moneyRequest->user->id }}</td>
+                    <td>{{ $moneyRequest->user->name }}</td>
+                    <td>{{ $moneyRequest->user->email }}</td>
+                    <td>{{ $moneyRequest->amount }}</td>
                     <td>
-                        @if ($request->status == 0)
-                            <span class="badge bg-warning text-dark">Pending</span>
+                        @if ($moneyRequest->status == 0)
+                            <span class="badge bg-warning">Pending</span>
                         @endif
                     </td>
-                    <td class="popup-gallery">
-                        <a href="{{ asset($request->document) }}">
-                            <img src="{{ asset($request->document) }}" alt="" class="custom-img_admin">
-                        </a>
-                    </td>
-                    <td>{{ $request->trx }}</td>
-                    <td class="d-flex gap-1">
-                        <a href="javascript:void(0)" class="btn btn-primary depositBtn" data-bs-toggle="modal"
+                    <td>{{ $moneyRequest->trx }}</td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-primary moneyRequestBtn" data-bs-toggle="modal"
                             data-bs-target="#acceptDepositModal"
-                            data-action="{{ route('admin.deposit.accept', $request->id) }}">Accepted</a>
-                        <a href="javascript:void(0)" class="btn btn-danger depositRejectBtn" data-bs-toggle="modal"
-                            data-bs-target="#rejectDepositModal"
-                            data-action="{{ route('admin.deposit.reject', $request->id) }}">Rejected</a>
+                            data-action="{{ route('user.accept.pending.money.request', $moneyRequest->id) }}">Accept</a>
+                        <a href="javascript:void(0)" class="btn btn-danger moneyRequestRejectBtn" data-bs-toggle="modal"
+                            data-bs-target="#rejectDepositModal" data-action="{{ route('user.reject.pending.money.request', $moneyRequest->id) }}">Reject</a>
                     </td>
                 </tr>
             @endforeach
         </table>
     </div>
 
+
+
     <!-- Modal for add-->
-    <div class="modal fade" id="acceptDepositModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="acceptMoneyRequestModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,8 +49,8 @@
                 </div>
                 <form action="" method="post">
                     @csrf
-                    <div class="modal-body border">
-                        <p>Are you sure to approve this transaction</p>
+                    <div class="modal-body">
+                        <p>Are you sure to send this amount</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -66,7 +62,8 @@
     </div>
 
     <!-- Modal for reject-->
-    <div class="modal fade" id="rejectDepositModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="rejectMoneyRequestModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,9 +72,9 @@
                 </div>
                 <form action="" method="post">
                     @csrf
-                    <div class="modal-body border">
+                    <div class="modal-body">
                         <p>Are you sure to reject this transaction</p>
-                        <input type="text" name="remarks" placeholder="Optional message" class="form-control">
+                        <input type="text" name="reason" placeholder="Reason for reject" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -90,13 +87,11 @@
 @endsection
 
 
-
-
 @push('scripts')
     <script>
-        const modal = $('#acceptDepositModal');
-        const modalReject = $('#rejectDepositModal');
-        $('.depositBtn').on('click', function() {
+        const modal = $('#acceptMoneyRequestModal');
+        const modalReject = $('#rejectMoneyRequestModal');
+        $('.moneyRequestBtn').on('click', function() {
             const action = $(this).attr('data-action');
             modal.find('form').attr('action', action);
             modal.modal('show');
@@ -106,7 +101,7 @@
         $('.confirmation').on('click', function() {
             modal.find('form').submit();
         })
-        $('.depositRejectBtn').on('click', function() {
+        $('.moneyRequestRejectBtn').on('click', function() {
             const action = $(this).attr('data-action');
             modalReject.find('form').attr('action', action);
             modalReject.modal('show');
@@ -114,5 +109,7 @@
         $('.reject').on('click', function() {
             modal.find('form').submit();
         })
+
+        
     </script>
 @endpush

@@ -49,7 +49,23 @@
                 </ul>
             </div>
 
-           
+            <div class="dropdown">
+                <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">Money Request</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.view.money.request') }}">Request Now</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.pending.money.request') }}">Pending money
+                            request</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.money.request.history') }}">Money
+                            request history</a>
+                    </li>
+                </ul>
+            </div>
 
             <a href="{{ route('user.transaction') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Transaction</a>

@@ -11,8 +11,9 @@
                 @foreach ($projectElement as $element)
                     <div class="project-item pe-5 pb-5">
                         <div class="project-img mb-3">
-                            <img class="img-fluid rounded" src="{{ asset('assets/images/'. $element->data_value->file) }}"
-                                alt="">
+                            @if (isset($element->data_value?->file))
+                                <img class="img-fluid rounded" src="{{ asset('assets/images/' . $element->data_value?->file) }}" alt="">
+                            @endif
                             <a href=""><i class="fa fa-link fa-3x text-primary"></i></a>
                         </div>
                         <div class="project-title">
