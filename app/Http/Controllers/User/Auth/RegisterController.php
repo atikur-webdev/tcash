@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -74,10 +75,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $referrerId  = null;
+        // if(!empty($data['referral'])) {
+        //     $referrer = User::where('referred_by', $data['referral'])->first();
+        //     if($referrer) {
+        //         $referrerId = $referrer->id;
+        //     }
+        // }
+
+        $referral = request()->referral;
+        $user = User::where('referral_link', $referral)->first();
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'referral_link' => strtoupper(Str::random(10)),
+            'referred_by' => $user->id
         ]);
     }
 }

@@ -7,7 +7,7 @@
                 <td>Date</td>
                 <td>User name</td>
                 <td>User email</td>
-                <td>Request amount</td>
+                <td>Requested amount</td>
                 <td>Status</td>
                 <td>trx</td>
                 <td>Reason</td>
@@ -17,7 +17,7 @@
                     <td>{{ $moneyRequest->created_at }}</td>
                     <td>{{ $moneyRequest->user->name ?? '' }}</td>
                     <td>{{ $moneyRequest->user->email ?? '' }}</td>
-                    <td>{{ $moneyRequest->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $moneyRequest->amount }}</td>
                     <td>
                         @if ($moneyRequest->status == 0)
                             <span class="badge bg-warning">Pending</span>

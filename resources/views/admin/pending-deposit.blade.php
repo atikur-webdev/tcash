@@ -3,22 +3,26 @@
     <div class="user-wrapper">
         <h3 class="mb-3">Pending Deposits</h3>
         <table class="table table-striped">
-            <tr>
+            <tr style="font-size: 12px">
                 <td>Date</td>
                 <td>User name</td>
                 <td>User email</td>
-                <td>Request amount</td>
+                <td>Sent amount</td>
+                <td>Charge</td>
+                <td>Requested amount</td>
                 <td>Status</td>
                 <td>Document</td>
                 <td>trx</td>
                 <td>Action</td>
             </tr>
             @foreach ($depositRequests as $request)
-                <tr>
+                <tr style="font-size: 11px">
                     <td>{{ $request->created_at }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->user->email }}</td>
-                    <td>{{ $request->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $request->sent_amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $request->charge }} </td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $request->amount }} </td>
                     <td>
                         @if ($request->status == 0)
                             <span class="badge bg-warning text-dark">Pending</span>
@@ -30,13 +34,13 @@
                         </a>
                     </td>
                     <td>{{ $request->trx }}</td>
-                    <td class="d-flex gap-1">
+                    <td class="d-flex gap-1 border-0">
                         <a href="javascript:void(0)" class="btn btn-primary depositBtn" data-bs-toggle="modal"
                             data-bs-target="#acceptDepositModal"
-                            data-action="{{ route('admin.deposit.accept', $request->id) }}">Accepted</a>
+                            data-action="{{ route('admin.deposit.accept', $request->id) }}">Accept</a>
                         <a href="javascript:void(0)" class="btn btn-danger depositRejectBtn" data-bs-toggle="modal"
                             data-bs-target="#rejectDepositModal"
-                            data-action="{{ route('admin.deposit.reject', $request->id) }}">Rejected</a>
+                            data-action="{{ route('admin.deposit.reject', $request->id) }}">Reject</a>
                     </td>
                 </tr>
             @endforeach

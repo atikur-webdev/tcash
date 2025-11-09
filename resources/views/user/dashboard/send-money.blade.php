@@ -42,7 +42,8 @@
             let percentCalculate = floatAmount * percentCharge / 100
             let percentFloatCalculate = parseFloat(percentCalculate)
             let totalCharge = percentCalculate + fixedCharge
-            let percentTotalCharge = parseFloat(totalCharge)
+            // let percentTotalCharge = parseFloat(totalCharge)
+            let totalFloatCharge = parseFloat(totalCharge)
 
             let totalCalculate = floatAmount + totalCharge
             totalChargeEl.text(totalCalculate.toFixed(2))

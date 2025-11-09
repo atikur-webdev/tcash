@@ -69,6 +69,8 @@
 
             <a href="{{ route('user.transaction') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Transaction</a>
+            <a href="{{ route('user.referral') }}"
+                class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Referral</a>
         </div>
     </div>
 </nav>

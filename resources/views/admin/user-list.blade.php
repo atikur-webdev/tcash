@@ -1,7 +1,10 @@
 @extends('admin.layouts.master')
 @section('content')
     <div class="user-wrapper">
-        <h1>Users List</h1>
+        <div class="user-refer-button d-flex justify-content-between align-items-center">
+            <h1>Users List</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#levelModal">+ Add new</button>
+        </div>
         <table class="table table-striped">
             <tr>
                 <td>Id</td>
@@ -10,7 +13,6 @@
                 <td>Action</td>
             </tr>
             @foreach ($users as $user)
- 
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
@@ -25,10 +27,12 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <li>
                                     <a class="dropdown-item btnAdd" href="javascript:void(0)" data-bs-toggle="modal"
-                                        data-bs-target="#addBalanceModal" data-action="{{ route('admin.addBalance.send', $user->id )}}">Add Balance</a>
+                                        data-bs-target="#addBalanceModal"
+                                        data-action="{{ route('admin.addBalance.send', $user->id) }}">Add Balance</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item btnSubtract" href="javascript:void(0)" data-action="{{ route('admin.subtract.balance', $user->id) }}">Subtract Balance</a>
+                                    <a class="dropdown-item btnSubtract" href="javascript:void(0)"
+                                        data-action="{{ route('admin.subtract.balance', $user->id) }}">Subtract Balance</a>
                                 </li>
                             </ul>
                         </div>
@@ -40,6 +44,36 @@
 
 
 
+    <!--add refer level Modal -->
+    <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Set percent level</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('admin.refer.level') }}" method="post">
+                    @csrf
+                    <div class="modal-body border">
+                        <div class="mb-3">
+                            <label for="level">Level</label>
+                            <input type="text" id="level" name="level" placeholder="set the level"
+                                class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="percentage">Percentage</label>
+                            <input type="text" id="percentage" name="percentage" placeholder="Set the percentage"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -71,7 +105,7 @@
 
 
 
-     <!--Subtract balance Modal -->
+    <!--Subtract balance Modal -->
     <div class="modal fade" id="subtractBalanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -100,13 +134,13 @@
 
 @push('scripts')
     <script>
-         $('.btnAdd').on('click', function() {
+        $('.btnAdd').on('click', function() {
             const action = $(this).attr('data-action');
             const modal = $('#addBalanceModal');
             modal.find('form').attr('action', action);
-            
+
             modal.modal('show');
-            
+
         })
         $('.btnSubtract').on('click', function() {
             const action = $(this).attr('data-action');

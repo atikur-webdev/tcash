@@ -13,7 +13,7 @@
             @foreach ($rejectWithdraws as $request)
                 <tr>
                     <td>{{ $request->created_at }}</td>
-                    <td>{{ $request->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $request->amount }}</td>
                     <td>{{ $request->transaction_number }}</td>
                     <td>
                         @if ($request->status == 2)

@@ -126,7 +126,11 @@ class DashboardController extends Controller
 
     public function viewDeposit()
     {
-        return view('user.dashboard.deposit');
+        $settings = Setting::first();
+        return view('user.dashboard.deposit', [
+            'fixedCharge' => $settings->send_money_fixed_charge,
+            'percentCharge' => $settings->send_money_percent_charge
+        ]);
     }
     public function sendDeposit(Request $request)
     {
@@ -134,9 +138,18 @@ class DashboardController extends Controller
             'deposit_amount' => 'required|gt:0',
             'document' => 'required'
         ]);
+        $settings = Setting::first();
+        $fixedCharge = $settings->send_money_fixed_charge;
+        $percentCharge = $settings->send_money_percent_charge;
+        $percentCalculate = $request->deposit_amount * $percentCharge / 100;
+        $totalCharge = $fixedCharge + $percentCalculate;
+        $totalCalculate =  $request->deposit_amount + $totalCharge;
+  
         $user = auth()->user();
         $deposits = new Deposit();
         $deposits->user_id = $user->id;
+        $deposits->sent_amount = $totalCalculate;
+        $deposits->charge = $totalCharge;
         $deposits->amount = $request->deposit_amount;
         $deposits->status = '0';
         $deposits->trx = trxGenerator();
@@ -165,7 +178,11 @@ class DashboardController extends Controller
     }
     public function viewWithdraw()
     {
-        return view('user.dashboard.withdraw-money');
+        $settings = Setting::first();
+        return view('user.dashboard.withdraw-money', [
+            'fixedCharge' => $settings->send_money_fixed_charge,
+            'percentCharge' => $settings->send_money_percent_charge
+        ]);
     }
     public function withdraw(Request $request)
     {
@@ -173,15 +190,38 @@ class DashboardController extends Controller
             'amount' => 'required|gt:0',
             'transaction_number' => 'required'
         ]);
+        $settings = Setting::first();
+        $fixedCharge = $settings->send_money_fixed_charge;
+        $percentCharge = $settings->send_money_percent_charge;
+        $percentCalculate = $request->amount * $percentCharge / 100;
+        $totalCharge = $fixedCharge + $percentCalculate;
+        $totalCalculate = $request->amount - $totalCharge;
+
         $user = auth()->user();
         if ($user->balance >= $request->amount) {
             $withdraws = new Withdraw();
             $withdraws->user_id = $user->id;
             $withdraws->amount = $request->amount;
+            $withdraws->charge = $totalCharge;
+            $withdraws->payable = $totalCalculate;
             $withdraws->transaction_number = $request->transaction_number;
             $withdraws->status = 0;
             $withdraws->trx = trxGenerator();
             $withdraws->save();
+
+            $user->balance -= $request->amount;
+            $user->save();
+
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $request->amount;
+            $transaction->type = '-';
+            $transaction->post_balance = $user->balance;
+            $transaction->details = 'Withdraw balance subtracted';
+            $transaction->trx = trxGenerator();
+            $transaction->remarks = 'withdraw_balance_subtracted';
+            $transaction->save();
+
             return back()->withSuccess('Request sent Successfully');
         }
         return back()->withErrors('Insufficient balance');
@@ -210,7 +250,8 @@ class DashboardController extends Controller
             'money_request_amount' =>
             [
                 'required',
-                'gt:0',
+                'numeric',
+                'gt:6',
             ]
         ]);
 
@@ -234,58 +275,54 @@ class DashboardController extends Controller
     }
     public function acceptMoneyRequest(Request $request, $id)
     {
-
         $receiver = auth()->user();
-        $acceptMoneyRequest = MoneyRequest::where('receiver_id', $receiver->id)->findOrFail($id);
 
+        $acceptMoneyRequest = MoneyRequest::where('receiver_id', $receiver->id)->findOrFail($id);
         if ($receiver->balance < $acceptMoneyRequest->amount) {
             return back()->withErrors('Insufficient balance');
         }
 
-
         $settings = Setting::first();
         $fixedCharge = $settings->send_money_fixed_charge;
         $percentCharge = $settings->send_money_percent_charge;
-        $percentCalculate = $request->amount * $percentCharge / 100;
+        $percentCalculate = $acceptMoneyRequest->amount * $percentCharge / 100;
 
         $totalCharge = $percentCalculate + $fixedCharge;
-        $totalCalculate = $request->amount - $totalCharge;
-    
+        $totalCalculate = $acceptMoneyRequest->amount - $totalCharge;
 
-
-        $receiver->balance += $totalCalculate;
+        $receiver->balance -= $acceptMoneyRequest->amount;
         $receiver->save();
+        $requester = User::find($acceptMoneyRequest->user_id);
+        $requester->balance += $totalCalculate;
+        $requester->save();
 
-        $user = User::find($acceptMoneyRequest->user_id);
-        $user->balance -=  $acceptMoneyRequest->amount;
-        $user->save();
 
         $transaction = new Transaction();
-        $transaction->user_id = $user->id;
+        $transaction->user_id = $receiver->id;
         $transaction->amount = $acceptMoneyRequest->amount;
         $transaction->type = '-';
-        $transaction->post_balance = $user->balance;
-        $transaction->details = 'Money sent successfully';
-        $transaction->remarks = 'sent_request_amount';
+        $transaction->post_balance = $receiver->balance;
+        $transaction->details = 'Accepted money request and sent amount';
+        $transaction->remarks = 'accept_request';
         $transaction->trx = trxGenerator();
         $transaction->save();
 
         $transaction = new Transaction();
-        $transaction->user_id = $acceptMoneyRequest->receiver_id;
+        $transaction->user_id = $requester->id;
         $transaction->amount = $totalCalculate;
         $transaction->type = '+';
-        $transaction->post_balance = $receiver->balance;
-        $transaction->details = 'Money sent successfully';
-        $transaction->remarks = 'sent_request_amount';
+        $transaction->post_balance = $requester->balance;
+        $transaction->details = 'Received money';
+        $transaction->remarks = 'accept_request_receive';
         $transaction->trx = trxGenerator();
         $transaction->save();
-
 
         $acceptMoneyRequest->status = 1;
         $acceptMoneyRequest->save();
 
-        return back()->withSuccess('Request amount sent successfully');
+        return back()->withSuccess('Request amount accepted successfully');
     }
+
     public function rejectMoneyRequest(Request $request, $id)
     {
         $moneyRequest = MoneyRequest::where('id', $id)->where('status', 0)->firstOrFail();
@@ -299,5 +336,10 @@ class DashboardController extends Controller
         $user = auth()->user();
         $moneyRequests = MoneyRequest::where('user_id', $user->id)->with('user')->latest()->get();
         return view('user.dashboard.money-request-history', compact('moneyRequests'));
+    }
+
+    public function referral() {
+        $user = User::where('id', auth()->id())->first();
+        return view('user.dashboard.referral', compact('user'));
     }
 }

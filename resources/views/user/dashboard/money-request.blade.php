@@ -17,7 +17,7 @@
                 <p>Fixed Charge: <span
                         id="fixed-charge">{{ $fixedCharge }}</span><strong>{{ siteCurrency()->cur_text }}</strong></p>
                 <p>Percent Charge: <span id="percent-charge">{{ $percentCharge }}</span><strong>%</strong></p>
-                <p>Total deduction: <span id="total-charge">0</span><strong>{{ siteCurrency()->cur_text }}</strong></p>
+                <p>You will get: <span id="total-charge">0</span><strong>{{ siteCurrency()->cur_text }}</strong></p>
             </div>
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Send Request</button>
@@ -30,23 +30,35 @@
 @push('scripts')
     <script>
         let fixedCharge = {{ $fixedCharge }}
-        
         let percentCharge = {{ $percentCharge }}
-        let fixedChargeEl = document.getElementById('fixed-charge');
-        let percentChargeEl = document.getElementById('percent-charge');
-        let totalChargeEl = document.getElementById('total-charge');
-
-        document.getElementById('amount').addEventListener('input', function() {
-            let amount = parseFloat(this.value);
-            console.log(amount);
-            
-            let percentCalculate = parseFloat(amount * percentCharge / 100)
-            let totalCharge = parseFloat(percentCalculate + fixedCharge)
-            let totalCalculate = amount - totalCharge
-            console.log(totalCalculate);
-
-            totalChargeEl.innerText = totalCalculate.toFixed(2)
-
+        let fixedChargeEl = $('#fixed-charge');
+        let percentChargeEl = $('#percent-charge');
+        let totalChargeEl = $('#total-charge');
+        
+        $('#amount').on('input', function() {
+            let amount = $(this).val();
+            let floatAmount = parseFloat(amount);
+            let percentCalculate = floatAmount * percentCharge / 100;
+            let percentFloatCalculate = parseFloat(percentCalculate);
+            let totalCharge = percentFloatCalculate + fixedCharge;
+            let totalFloatCharge = parseFloat(totalCharge);
+            let totalCalculate = floatAmount - totalFloatCharge;
+            totalChargeEl.text(totalCalculate.toFixed(2))
         })
+        
+        // let fixedChargeEl = document.getElementById('fixed-charge');
+        // let percentChargeEl = document.getElementById('percent-charge');
+        // let totalChargeEl = document.getElementById('total-charge');
+
+        // document.getElementById('amount').addEventListener('input', function() {
+        //     let amount = parseFloat(this.value);
+        //     console.log(amount);
+            
+        //     let percentCalculate = parseFloat(amount * percentCharge / 100)
+        //     let totalCharge = parseFloat(percentCalculate + fixedCharge)
+        //     let totalCalculate = amount - totalCharge
+        //     console.log(totalCalculate);
+        //     totalChargeEl.innerText = totalCalculate.toFixed(2)
+        // })
     </script>
 @endpush

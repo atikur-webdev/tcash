@@ -17,7 +17,7 @@
                     <td>{{ $moneyRequest->user->id }}</td>
                     <td>{{ $moneyRequest->user->name }}</td>
                     <td>{{ $moneyRequest->user->email }}</td>
-                    <td>{{ $moneyRequest->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $moneyRequest->amount }}</td>
                     <td>
                         @if ($moneyRequest->status == 0)
                             <span class="badge bg-warning">Pending</span>

@@ -17,7 +17,7 @@
                     <td>{{ $request->created_at }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->user->email }}</td>
-                    <td>{{ $request->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $request->amount }}</td>
                     <td>
                         @if ($request->status == 2)
                             <span class="badge bg-warning">Rejected</span>

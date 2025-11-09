@@ -50,6 +50,7 @@ Route::middleware(['admin.auth'])->name('admin.')->prefix('admin')->group(functi
     Route::post('reject/pending/withdraw/{id}', [DashboardController::class, 'rejectWithdraw'])->name('reject.pending.withdraw');
     Route::get('success/withdraw', [DashboardController::class, 'successWithdraw'])->name('success.withdraw');
     Route::get('rejected/withdraw', [DashboardController::class, 'viewRejectWithdraw'])->name('reject.withdraw');
+    Route::post('refer/level', [DashboardController::class, 'referLevel'])->name('refer.level');
     
 
 
@@ -97,6 +98,7 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
     Route::post('accept/pending/money/request/{id}', [UserDashboardController::class, 'acceptMoneyRequest'])->name('accept.pending.money.request');
     Route::post('reject/pending/money/request/{id}', [UserDashboardController::class, 'rejectMoneyRequest'])->name('reject.pending.money.request');
     Route::get('money/request/history', [UserDashboardController::class, 'moneyRequestHistory'])->name('money.request.history');
+    Route::get('referral', [UserDashboardController::class, 'referral'])->name('referral');
     
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

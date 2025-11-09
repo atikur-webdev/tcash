@@ -14,7 +14,7 @@
             @foreach ($withdraws as $withdraw)
                 <tr>
                     <td>{{ $withdraw->created_at }}</td>
-                    <td>{{ $withdraw->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $withdraw->amount }}</td>
                     <td>{{ $withdraw->transaction_number }}</td>
                     <td>
                         @if ($withdraw->status == 0)

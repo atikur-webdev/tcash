@@ -16,7 +16,7 @@
                     <td>{{ $deposit->created_at }}</td>
                     <td>{{ $deposit->user->name }}</td>
                     <td>{{ $deposit->user->email }}</td>
-                    <td>{{ $deposit->amount }}</td>
+                    <td>{{ siteCurrency()->cur_sym }}{{ $deposit->amount }}</td>
                     <td>
                         @if ($deposit->status == 0)
                             <span class="badge bg-warning">Pending</span>

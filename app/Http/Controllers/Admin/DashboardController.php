@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
+use App\Models\ReferLevel;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
@@ -95,7 +96,7 @@ class DashboardController extends Controller
         $transaction->type = '+';
         $transaction->post_balance = $user->balance;
         $transaction->details = 'New balance added';
-        $transaction->remarks = 'new_balance_added';
+        $transaction->remarks = 'new_deposit_balance_added';
         $transaction->trx = trxGenerator();
         $transaction->save();
 
@@ -148,9 +149,21 @@ class DashboardController extends Controller
 
     }
     public function rejectWithdraw($id) {
+        $user = auth()->user();
         $rejectWithdraws = Withdraw::where('id', $id)->where('status', 0)->firstOrFail();
         $rejectWithdraws->status = 2;
         $rejectWithdraws->save();
+        $user->balance += $rejectWithdraws->amount;
+        $user->save();
+        $transaction = new Transaction();
+        $transaction->user_id = $user->id;
+        $transaction->amount = $rejectWithdraws->amount;
+        $transaction->type = '+';
+        $transaction->post_balance = $user->balance;
+        $transaction->details = 'Withdraw balance back to user';
+        $transaction->trx = trxGenerator();
+        $transaction->remarks = 'withdraw_balance_back_to_user';
+        $transaction->save();
         return back()->withSuccess('Withdraw request rejected successfully');
     }
     public function successWithdraw() {
@@ -160,5 +173,16 @@ class DashboardController extends Controller
     public function viewRejectWithdraw() {
         $rejectWithdraws = Withdraw::where('status', 2)->latest()->get();
         return view('admin.reject-withdraw', compact('rejectWithdraws'));
+    }
+    public function referLevel(Request $request) {
+        $request->validate([
+            'level' => 'required|unique:refer_level,level',
+            'percentage' => 'required|numeric'
+        ]);
+        $referLevels = new ReferLevel();
+        $referLevels->level = $request->level;
+        $referLevels->percent_amount = $request->percentage;
+        $referLevels->save();
+        return back()->withSuccess('Level and percentage set successfully');
     }
 }

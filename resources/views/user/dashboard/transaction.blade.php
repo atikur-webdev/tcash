@@ -9,7 +9,6 @@
                 Date
             </td>
             <td>Amount</td>
-            <td>Currency</td>
             <td>Type</td>
             <td>Post balance</td>
             <td>Details</td>
@@ -19,10 +18,9 @@
        @foreach ($transactionItems as $item)
            <tr>
             <td>{{ $item->created_at }}</td>
-            <td>{{ $item->amount }}</td>
-            <td>{{ siteCurrency()->cur_sym }}</td>
+            <td>{{ siteCurrency()->cur_sym }}{{ $item->amount }}</td>
             <td>{{ $item->type }}</td>
-            <td>{{ $item->post_balance }}</td>
+            <td>{{ siteCurrency()->cur_sym }}{{ $item->post_balance }}</td>
             <td>{{ $item->details }}</td>
             <td>{{ $item->trx }}</td>
             <td>{{ $item->remarks }}</td>

@@ -22,6 +22,8 @@
 
                         <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
 
+                        <input type="hidden" name="referral" value="{{ request()->referral  }}">
+
                         <button type="submit">Sign Up</button>
                     </form>
 

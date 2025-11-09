@@ -15,8 +15,8 @@
             <tr>
                 <td>{{ $transaction->created_at }}</td>
                 <td>{{ $transaction->details }}</td>
-                <td>{{ $transaction->amount }}</td>
-                <td>{{ $transaction->post_balance }}</td>
+                <td>{{ siteCurrency()->cur_sym }}{{ $transaction->amount }}</td>
+                <td>{{ siteCurrency()->cur_sym }}{{ $transaction->post_balance }}</td>
                 <td>{{ $transaction->remarks }}</td>
                 <td>{{ $transaction->trx }}</td>
             </tr>
