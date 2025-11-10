@@ -44,36 +44,6 @@
 
 
 
-    <!--add refer level Modal -->
-    <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Set percent level</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('admin.refer.level') }}" method="post">
-                    @csrf
-                    <div class="modal-body border">
-                        <div class="mb-3">
-                            <label for="level">Level</label>
-                            <input type="text" id="level" name="level" placeholder="set the level"
-                                class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="percentage">Percentage</label>
-                            <input type="text" id="percentage" name="percentage" placeholder="Set the percentage"
-                                class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
 

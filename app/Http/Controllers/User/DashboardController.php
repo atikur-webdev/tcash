@@ -169,11 +169,13 @@ class DashboardController extends Controller
         }
 
         $deposits->save();
-        return to_route('user.deposit.history')->withSuccess('Your deposit request sent successfully');
+        // return to_route('user.deposit.history')->withSuccess('Your deposit request sent successfully');
+        return back()->withSuccess('Your deposit request sent successfully');
     }
     public function depositHistory()
     {
-        $deposits = Deposit::latest()->get();
+        $user = auth()->user();
+        $deposits = Deposit::where('user_id', $user->id)->latest()->get();
         return view('user.dashboard.deposit-history', compact('deposits'));
     }
     public function viewWithdraw()
@@ -228,7 +230,8 @@ class DashboardController extends Controller
     }
     public function withdrawHistory()
     {
-        $withdraws = Withdraw::latest()->get();
+        $user = auth()->user();
+        $withdraws = Withdraw::where('user_id', $user->id)->latest()->get();
         return view('user.dashboard.withdraw-history', compact('withdraws'));
     }
     public function viewMoneyRequest()

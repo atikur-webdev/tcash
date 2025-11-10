@@ -50,7 +50,10 @@ Route::middleware(['admin.auth'])->name('admin.')->prefix('admin')->group(functi
     Route::post('reject/pending/withdraw/{id}', [DashboardController::class, 'rejectWithdraw'])->name('reject.pending.withdraw');
     Route::get('success/withdraw', [DashboardController::class, 'successWithdraw'])->name('success.withdraw');
     Route::get('rejected/withdraw', [DashboardController::class, 'viewRejectWithdraw'])->name('reject.withdraw');
+    Route::get('view/refer/level', [DashboardController::class, 'viewLevel'])->name('view.level');
     Route::post('refer/level', [DashboardController::class, 'referLevel'])->name('refer.level');
+    Route::post('edit/refer/level/{level}', [DashboardController::class, 'editReferLevel'])->name('edit.refer.level');
+    Route::post('delete/refer/level/{level}', [DashboardController::class, 'deleteReferLevel'])->name('delete.refer.level');
     
 
 

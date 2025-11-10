@@ -67,6 +67,14 @@
                             <li><a class="dropdown-item" href="{{ route('admin.reject.withdraw') }}">Rejected Withdraws</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('admin.view.level') }}">
+                            <span>
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="hide-menu">Levels</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

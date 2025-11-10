@@ -57,4 +57,7 @@ class User extends Authenticatable
     public function deposits() {
         return $this->hasMany(Deposit::class);
     }
+    public function referLevel() {
+        return $this->hasOne(ReferLevel::class);
+    }
 }
