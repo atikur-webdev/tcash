@@ -69,6 +69,21 @@
 
             <a href="{{ route('user.transaction') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Transaction</a>
+               
+
+            <div class="dropdown">
+                <a href="" class="nav-item nav-link" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">Dps</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                         <a href="{{ route('user.view.dps.plan') }}" class="dropdown-item">Dps</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('user.view.applied.dps.plan') }}">My dps</a>
+                    </li>
+                </ul>
+            </div>
+
             <a href="{{ route('user.referral') }}"
                 class="nav-item nav-link {{ request()->routeIs('user.transaction') ? 'active' : '' }}">Referral</a>
         </div>

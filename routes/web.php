@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\Auth\PasswordResetController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DpsController;
 use App\Http\Controllers\Admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ResetPasswordController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\Auth\LoginController;
 use App\Http\Controllers\User\Auth\RegisterController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\UserDpsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,6 +21,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('about', [HomeController::class, 'viewAbout'])->name('about');
 Route::get('service', [HomeController::class, 'viewService'])->name('service');
 Route::get('contact', [HomeController::class, 'viewContact'])->name('contact');
+
+// Route::get('cron', function () {
+//     echo "executed";
+// });
 
 
 Route::prefix('admin')->middleware('admin.guest')->name('admin.')->group(function () {
@@ -54,7 +60,11 @@ Route::middleware(['admin.auth'])->name('admin.')->prefix('admin')->group(functi
     Route::post('refer/level', [DashboardController::class, 'referLevel'])->name('refer.level');
     Route::post('edit/refer/level/{level}', [DashboardController::class, 'editReferLevel'])->name('edit.refer.level');
     Route::post('delete/refer/level/{level}', [DashboardController::class, 'deleteReferLevel'])->name('delete.refer.level');
-    
+    Route::get('view/dps', [DpsController::class, 'viewDps'])->name('view.dps');
+    Route::post('add/dps/plan', [DpsController::class, 'addDpsPlan'])->name('add.dps.plan');
+    Route::post('edit/dps/plan/{id}', [DpsController::class, 'editDpsPlan'])->name('edit.dps.plan');
+    Route::post('disable/dps/plan/{id}', [DpsController::class, 'disableDpsPlan'])->name('disable.dps.plan');
+    Route::post('enable/dps/plan/{id}', [DpsController::class, 'enableDpsPlan'])->name('enable.dps.plan');
 
 
     Route::get('section/list', [SectionController::class, 'list'])->name('section.list');
@@ -102,6 +112,9 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
     Route::post('reject/pending/money/request/{id}', [UserDashboardController::class, 'rejectMoneyRequest'])->name('reject.pending.money.request');
     Route::get('money/request/history', [UserDashboardController::class, 'moneyRequestHistory'])->name('money.request.history');
     Route::get('referral', [UserDashboardController::class, 'referral'])->name('referral');
-    
+    Route::get('view/dps/Plan', [UserDpsController::class, 'viewDpsPlan'])->name('view.dps.plan');
+    Route::post('apply/dps/plan/{id}', [UserDpsController::class, 'applyDpsPlan'])->name('apply.dps.plan');
+    Route::get('view/applied/dps/plan', [UserDpsController::class, 'viewAppliedDpsPlan'])->name('view.applied.dps.plan');
+
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

@@ -1,35 +1,44 @@
-Step 1: A new page referral >
-Referral link: mydomain.com/register/{unique_identifier}
+step 1:make a database table for dps,
+column name:
+id,
+dps name,
+installment interval,
+total installment,
+per installment,
+interest rate,
+
+step 2:show dps button to user navbar, done
+step 3:show the dps plan to User/dashboard/dps, done
+step 4:User can see the plan and button Apply now,if user click on that then the the per_installment will be cut from user balance
+step 5:Before click on apply now we need to check user balance for paying minimum per_installment
 
 
-step 1:create a table in database for level 
-step 2:make a add new button,when admin will click on that button then a modal will be appear in that modal there will be a option like: level 1,and one input field with 10%,
-if admin create it then it will add in that table column,
-step 3:if admin delete one level then it auto sorted in database table in column level;
+process:first make route and controller,
+click korle user->balance - per_installment;
+dps table e column anbo status active,of,
+r apply te click korle balance katbo r status active kore dibo,
+tarpor user k redirect korbo mydps e,sekhane jegula user er active dps ache ogulake table er maddhome show korabo,
 
 
-table structure:
-id, level, percent amount
+
+<!-- step1:apply hobar pore dps er list asbe ekta page,
+step2:oi page er controller e first e:
+first installment jedin gese oidiner date ber korte hobe,
+oidin theke next 30 diner date ber korte hobe,
+30 din porer data pele ami user balance theke taka kete dibo,r given installment baray dibo,
+confuision hocce,
+ami 30 diner porer date ke installment_interval er stahe milabo kivabe,
+amar installment_interval e lekha 30,
+tahole next 30 day porer date ke 30 er sathe kivabe milabo,
+ajke 11-11-25 30 din pore 11-12-25 ei date take kivabe 30 er stahe milabo, -->
+
+r ekta kaj kora jai,
+ami given_installment jokhon 1 setake bolbo day 1;
+r jokhon day 1 == 30 tokhon user er balance theke taka kete nilam
+tahole ekahne ekta loop hobe,day k increment kore dibo,day jedin 30 e jabe tar pore abar loop first e asbe,
+kintu problem hocche loop ghurar por given_installment 2 hobe,
+er pore to loop r cholbe na,
 
 
-reward level:
-user a -> b -> c -> d -> e ->f
 
-if f deposit 1000 dollar,
-then e will get 10% of that 1000 dollar
-d will get 5% of that 1000 dollar 
-c will get 2% of that 1000 dollar
-
-process::
-when f request 100 dollar to admin,
-and if admin will accept it then the percentage will be added.
-
-f er 100 dollar deposit er jonono 115 dollar pay korte hoi,
-r admin jodi 100 dollar approve kore,tahole f 100 dollar pay,
-r ekhn amra oi 100 dollar jeita f er pabar kotha sekhan theke 10%,5%,2% kore katbo,
-tahole or to lose hoia jai,
-kintu taka ta katbe main balance thekei,tachara 10%,5%,2% koi pabe,eita oi 100 dollar thekei katte hobe,
-
-
-admin jokhon accept korbe,
-tokhon user table theke referred_by dhore data nia aslam,tarpor sekhan theke % add korbo
+*****:installment name ekta table hobe,jekhane user dps e apply korle installment table e installment data add hobe;

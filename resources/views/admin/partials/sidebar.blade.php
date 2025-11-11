@@ -47,9 +47,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('admin.all.deposit') }}">All Deposits</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.deposit.pending') }}">Pending Deposits</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.deposit.success') }}">Successful Depostis</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.show.reject.deposit') }}">Reject Depostis</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.deposit.pending') }}">Pending
+                                    Deposits</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.deposit.success') }}">Successful
+                                    Depostis</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.show.reject.deposit') }}">Reject
+                                    Depostis</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
@@ -62,9 +65,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('admin.allWithdraw') }}">All Withdraws</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.pending.withdraw') }}">Pending Withdraws</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.success.withdraw') }}">Success Withdraws</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.reject.withdraw') }}">Rejected Withdraws</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.pending.withdraw') }}">Pending
+                                    Withdraws</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.success.withdraw') }}">Success
+                                    Withdraws</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.reject.withdraw') }}">Rejected
+                                    Withdraws</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
@@ -74,6 +80,18 @@
                             </span>
                             <span class="hide-menu">Levels</span>
                         </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="#" aria-expanded="false" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span>
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="hide-menu">Dps</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('admin.view.dps') }}">Dps</a></li>
+                        </ul>
                     </li>
                 </ul>
             </nav>

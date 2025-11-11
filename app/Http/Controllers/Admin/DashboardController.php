@@ -89,10 +89,20 @@ class DashboardController extends Controller
 
 
         $user = User::findOrFail($acceptDeposit->user_id);
-        // $user->balance = $user->balance + $acceptDeposit->amount;
-        // $user->save();
+        $user->balance = $user->balance + $acceptDeposit->amount;
+        $user->save();
 
-        // $user = $acceptDeposit->user;
+        $transaction = new Transaction();
+        $transaction->user_id = $user->id;
+        $transaction->amount = $acceptDeposit->amount;
+        $transaction->type = '+';
+        $transaction->post_balance = $user->balance;
+        $transaction->details = 'New deposit';
+        $transaction->remarks = 'new_deposit_balance_added';
+        $transaction->trx = trxGenerator();
+        $transaction->save();
+
+        $user = $acceptDeposit->user;
         $level = 1;
 
         while ($user->referred_by) {
@@ -102,30 +112,26 @@ class DashboardController extends Controller
             $calculation = $acceptDeposit->amount * $referLevel->percent_amount / 100;
             $referredByUser->balance += $calculation;
             $referredByUser->save();
-            $addBalance = $acceptDeposit->amount - $calculation;
-            $user->balance = $user->balance + $addBalance;
-            $user->save();
-
+       
             $level++;
             if ($user->referred_by === 0) break;
             $user = $referredByUser;
-        }
 
-        // $transaction = new Transaction();
-        // $transaction->user_id = $user->id;
-        // $transaction->amount = $acceptDeposit->amount;
-        // $transaction->type = '+';
-        // $transaction->post_balance = $user->balance;
-        // $transaction->details = 'New balance added';
-        // $transaction->remarks = 'new_deposit_balance_added';
-        // $transaction->trx = trxGenerator();
-        // $transaction->save();
+            $transaction = new Transaction();
+            $transaction->user_id = $referredByUser->id;
+            $transaction->amount = $calculation;
+            $transaction->type = '+';
+            $transaction->post_balance = $referredByUser->balance;
+            $transaction->details = 'Refer amount added to your balance';
+            $transaction->remarks = 'new_refer_balance_added';
+            $transaction->trx = trxGenerator();
+            $transaction->save();
+        }
 
         return back()->withSuccess('Amount sent successfully');
     }
     public function rejectDeposit(Request $request, $id)
     {
-
         // $rejectDeposit = Deposit::destroy($id);
         // $rejectDeposit = Deposit::where('id', $id)->where('status', 0)->update(['status' => 2]);
         $rejectDeposit = Deposit::where('id', $id)->where('status', 0)->firstOrFail();

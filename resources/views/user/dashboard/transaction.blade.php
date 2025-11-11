@@ -11,9 +11,8 @@
             <td>Amount</td>
             <td>Type</td>
             <td>Post balance</td>
-            <td>Details</td>
             <td>trx</td>
-            <td>Remarks</td>
+            <td>Details</td>
         </tr>
        @foreach ($transactionItems as $item)
            <tr>
@@ -21,9 +20,8 @@
             <td>{{ siteCurrency()->cur_sym }}{{ $item->amount }}</td>
             <td>{{ $item->type }}</td>
             <td>{{ siteCurrency()->cur_sym }}{{ $item->post_balance }}</td>
-            <td>{{ $item->details }}</td>
             <td>{{ $item->trx }}</td>
-            <td>{{ $item->remarks }}</td>
+            <td>{{ $item->details }}</td>
            </tr>
        @endforeach 
     </table>
