@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DpsController;
 use App\Http\Controllers\Admin\ForgetPasswordController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ResetPasswordController;
+use App\Http\Controllers\CronController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\Auth\LoginController;
 use App\Http\Controllers\User\Auth\RegisterController;
@@ -118,3 +119,4 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+Route::get('access', [CronController::class, 'installment']);

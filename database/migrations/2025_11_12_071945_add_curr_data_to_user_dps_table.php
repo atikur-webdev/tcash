@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_dps', function (Blueprint $table) {
-            $table->integer('dps_id')->after('user_id');
+            $table->date('curr_date')->useCurrent()->after('given_installment');
         });
     }
 

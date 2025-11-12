@@ -61,9 +61,7 @@ class User extends Authenticatable
         return $this->hasOne(ReferLevel::class);
     }
     public function userDps() {
-        return $this->hasMany(UserDps::class);
+        return $this->hasMany(UserDps::class, 'user_id');
     }
-    public function dps() {
-        return $this->hasMany(Dps::class, 'id');
-    }
+
 }

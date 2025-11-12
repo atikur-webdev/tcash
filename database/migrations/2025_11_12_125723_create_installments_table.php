@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user_dps', function (Blueprint $table) {
-            $table->integer('dps_id')->after('user_id');
+        Schema::create('installments', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('dps_id');
+            $table->integer('amount');
+            $table->date('payment_date')->now();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_dps', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('installments');
     }
 };

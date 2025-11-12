@@ -42,3 +42,13 @@ er pore to loop r cholbe na,
 
 
 *****:installment name ekta table hobe,jekhane user dps e apply korle installment table e installment data add hobe;
+
+
+
+curr_date 25-11-12 12:02 >= 12:00 25-12-11 next 30 days
+
+
+
+
+
+

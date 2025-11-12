@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\UserDps;
 use Illuminate\Database\Eloquent\Model;
 
-class Dps extends Model
+class Installment extends Model
 {
-    
+    //
 }

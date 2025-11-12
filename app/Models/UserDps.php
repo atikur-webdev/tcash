@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserDps extends Model
 {
-    public function user() {
+    public function dps()
+    {
+        return $this->belongsTo(Dps::class);
+    }
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
