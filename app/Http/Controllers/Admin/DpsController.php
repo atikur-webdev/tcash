@@ -26,8 +26,6 @@ class DpsController extends Controller
         $dps->total_installment = $request->total_installment;
         $dps->per_installment = $request->per_installment;
         $dps->interest_rate = $request->interest_rate;
-        $dps->given_installment = 0;
-        $dps->disable = 0;
         $dps->save();
         return back()->withSuccess('New dps plan created successfully');
     }

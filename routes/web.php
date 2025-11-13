@@ -116,6 +116,7 @@ Route::prefix('user/')->middleware('auth')->name('user.')->group(function () {
     Route::get('view/dps/Plan', [UserDpsController::class, 'viewDpsPlan'])->name('view.dps.plan');
     Route::post('apply/dps/plan/{id}', [UserDpsController::class, 'applyDpsPlan'])->name('apply.dps.plan');
     Route::get('view/applied/dps/plan', [UserDpsController::class, 'viewAppliedDpsPlan'])->name('view.applied.dps.plan');
+    Route::get('view/dps/details/{id}', [UserDpsController::class, 'viewDpsDetails'])->name('view.dps.details');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

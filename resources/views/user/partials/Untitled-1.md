@@ -52,3 +52,9 @@ curr_date 25-11-12 12:02 >= 12:00 25-12-11 next 30 days
 
 
 
+first installment 11-10,
+next installment 12-10,
+
+
+first problem:ami date ber korte pari nai,
+second problem:ami alada installment table e

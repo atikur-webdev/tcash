@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ $dpsPlan->name }}</td>
                 <td>{{ $dpsPlan->installment_interval }}</td>
-                <td>{{ siteCurrency()->cur_sym }} {{ $dpsPlan->total_installment }} </td>
+                <td>{{ $dpsPlan->total_installment }} </td>
                 <td>{{ siteCurrency()->cur_sym }} {{ $dpsPlan->per_installment }}</td>
                 <td>{{ $dpsPlan->interest_rate }}%</td>
                 <td>

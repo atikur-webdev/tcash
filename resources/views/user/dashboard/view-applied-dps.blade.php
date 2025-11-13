@@ -10,6 +10,8 @@
                 <td>Per installment</td>
                 <td>Interest rate</td>
                 <td>Given installment</td>
+                <td>Next payment date</td>
+                <td>Action</td>
             </tr>
             @foreach ($userDps as $dps)
                 <tr>
@@ -19,6 +21,16 @@
                     <td>{{ siteCurrency()->cur_sym }}{{ $dps->dps->per_installment }}</td>
                     <td>{{ $dps->dps->interest_rate }}%</td>
                     <td>{{ $dps->given_installment }}</td>
+                    <td>
+                        @if($dps->matured == 0)
+                        {{ $dps->next_payment_date }}
+                        @else
+                        <span class="badge bg-success">Matured</span>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('user.view.dps.details', $dps->id) }}" class="btn btn-primary">Details</a>
+                    </td>
                 </tr>
             @endforeach
         </table>

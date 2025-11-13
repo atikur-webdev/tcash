@@ -15,15 +15,15 @@ class UserDpsController extends Controller
 {
     public function viewDpsPlan()
     {
-        $dps = Dps::where('disable', 0)->get();
+        $dps = Dps::get();
         return view('user.dashboard.view-dps-plan', compact('dps'));
     }
     public function applyDpsPlan($id)
     {
-        $dps = Dps::where('id', $id)->firstOrFail();
+        $dps = Dps::where('id', $id)->with('userDps')->firstOrFail();
         $user = auth()->user();
         $userDpsData = new UserDps();
-      
+
         if ($user->balance >= $dps->per_installment) {
             $user->balance -= $dps->per_installment;
             $user->save();
@@ -34,16 +34,20 @@ class UserDpsController extends Controller
             $userDpsData->per_installment = $dps->per_installment;
             $userDpsData->interest_rate = $dps->interest_rate;
             $userDpsData->given_installment = 1;
+            $userDpsData->active = 1;
+            $userDpsData->next_payment_date = now()->addDays($dps->installment_interval)->format('Y-m-d');
             $userDpsData->save();
+
+
+          
 
             $installment = new Installment();
             $installment->user_id = $user->id;
-            $installment->dps_id = $dps->id;
-            $installment->total_installment += 1;
+            $installment->user_dps_id = $userDpsData->id;
             $installment->amount = $userDpsData->per_installment;
             $installment->payment_date = now();
-            $installment->save();       
-     
+            $installment->save();
+
 
             $transaction = new Transaction();
             $transaction->user_id = $user->id;
@@ -54,30 +58,22 @@ class UserDpsController extends Controller
             $transaction->trx = trxGenerator();
             $transaction->remarks = 'installment_cut';
             $transaction->save();
-            
-            return to_route('user.view.applied.dps.plan')->withSuccess('Dps activate successfully');
 
+            return to_route('user.view.applied.dps.plan')->withSuccess('Dps activate successfully');
         }
         return back()->withErrors('Insufficient balance');
     }
 
     public function viewAppliedDpsPlan()
     {
-        // $today = Carbon::now();
-        // $user = User::with('userDps')->where('id', auth()->id())->get();
-        // $userDps = $user->userDps->first();
         $userDps = UserDps::where('user_id', auth()->id())->with('dps')->get();
-  
-
-        // $created_at = Carbon::parse($userDps->created_at)->format('Y-m-d');
-        // $curr_date = $created_at == $today->toDateString();
-        // $next30Days = $today->addMonths(1);
-
-        // if ($curr_date == $next30Days) {
-        //     $user = User::where('id', auth()->id())->firstOrFail();
-        //     $user->balance -= $userDps->per_installment;
-        //     $user->save();
-        // }
         return view('user.dashboard.view-applied-dps', compact('userDps'));
+    }
+    public function viewDpsDetails($id)
+    {
+        $userDps = UserDps::where('user_id', auth()->id())->findOrFail($id);
+        $installments = Installment::where('user_id', auth()->id())->where('user_dps_id', $userDps->id)->with('userDps')->get();
+
+        return view('user.dashboard.view-dps-details', compact('installments'));
     }
 }

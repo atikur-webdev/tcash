@@ -16,4 +16,7 @@ class UserDps extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function installment() {
+        return $this->hasMany(Installment::class, 'user_dps_id');
+    }
 }

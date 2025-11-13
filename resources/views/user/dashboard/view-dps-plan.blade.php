@@ -1,6 +1,6 @@
 @extends('user.layouts.dashboard-master')
 @section('panel')
-    <div class="dps-plans" style="display: flex; gap:10px; align-item:center; justify-content:center; margin-top: 50px;">
+    <div class="dps-plans" style="display: flex; gap:10px; align-item:center; justify-content:center; margin-top: 50px;flex-wrap: wrap;">
         @foreach ($dps as $dpsPlan)
             <div class="card" style="width: 18rem; margin-top:40px;">
                 <div class="card-header bg-primary">
@@ -23,16 +23,26 @@
                         <span>Interest Rate</span>
                         <span>{{ $dpsPlan->interest_rate }}%</span>
                     </li>
+                    @php
+                        $userDps = $dpsPlan->userDps->where('user_id', auth()->id())->first();      
+                    @endphp
+
+                    @if($userDps && $userDps->active == 1)
+                    <button type="submit" class="btn btn-primary w-100">
+                        Applied
+                    </button>
+                    @else
+                   
                     <button type="submit" class="btn btn-primary w-100 btnAcceptDps" data-bs-toggle="modal"
                         data-bs-target="#applyDpsModal"
                         data-action="{{ route('user.apply.dps.plan', $dpsPlan->id) }}">
                         Apply Now
                     </button>
+                    @endif
                 </ul>
             </div>
         @endforeach
     </div>
-
 
     <!-- Modal -->
     <div class="modal fade" id="applyDpsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -20,58 +20,61 @@ class CronController extends Controller
     {
         $userDps = UserDps::with('user')->get();
 
-        foreach ($userDps as $dps) {
-            $installment = Installment::where('user_id', $dps->user_id)->where('user_dps_id', $dps->dps_id)->latest()->first();
-
-            if (empty($installment)) {
+        foreach($userDps as $dps) {
+           
+            $installment = Installment::where('user_id', $dps->user_id)->where('user_dps_id', $dps->id)->first();
+            if(empty($installment)) {
                 continue;
             }
-            
             $user = $dps->user;
-            $installmentDate = Carbon::parse($dps->curr_date);
-            $nextInstallmentDate = carbon::parse($dps->curr_date)->addDays($dps->installment_interval);
+            $installmentDate = Carbon::parse($dps->next_payment_date);
+            $nextInstallmentDate = Carbon::parse($dps->next_payment_Date)->addDays($dps->installment_interval);
+            if($installmentDate <= now() && $user->balance > $dps->per_installment) {
 
-            if ($installmentDate <= now() && $user->balance > $dps->per_installment) {
                 $user->balance -= $dps->per_installment;
                 $user->save();
+
                 $transaction = new Transaction();
                 $transaction->user_id = $user->id;
                 $transaction->amount = $dps->per_installment;
                 $transaction->type = '-';
                 $transaction->post_balance = $user->balance;
-                $transaction->details = 'Dps amount subtracted';
-                $transaction->remarks = 'dps_amount_subtracted';
+                $transaction->details = 'Dps balance subtracted';
+                $transaction->remarks = 'dps_balance_subtracted';
                 $transaction->trx = trxGenerator();
                 $transaction->save();
 
                 $interest = $dps->per_installment * 10 / 100;
                 $user->balance += $interest;
                 $user->save();
+
                 $transaction = new Transaction();
                 $transaction->user_id = $user->id;
                 $transaction->amount = $interest;
                 $transaction->type = '+';
                 $transaction->post_balance = $user->balance;
                 $transaction->details = 'Per dps interest added';
-                $transaction->remarks = 'per_dps_added';
+                $transaction->remarks = 'per_dps_interest_added';
                 $transaction->trx = trxGenerator();
                 $transaction->save();
+                
 
-                // increment installment and change date
                 $installment = new Installment();
-                $installment->user_id       = $user->id;
-                $installment->user_dps_id   = $dps->id;
+                $installment->user_id = $user->id;
+                $installment->user_dps_id = $dps->id;
                 $installment->amount = $dps->per_installment;
-                $installment->total_installment = 1;
                 $installment->payment_date = now()->format('Y-m-d');
                 $installment->save();
 
                 $dps->given_installment += 1;
-                $dps->curr_date = $nextInstallmentDate;
+                $dps->next_payment_date = $nextInstallmentDate;
                 $dps->save();
+                if ($dps->given_installment === $dps->total_installment) {
+                    $dps->matured = 1;
+                    $dps->save();
+                }
 
-            };
-
+            }
         }
     }
 }
