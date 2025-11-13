@@ -15,7 +15,7 @@ class UserDpsController extends Controller
 {
     public function viewDpsPlan()
     {
-        $dps = Dps::get();
+        $dps = Dps::where('disable', 0)->get();
         return view('user.dashboard.view-dps-plan', compact('dps'));
     }
     public function applyDpsPlan($id)

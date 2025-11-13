@@ -48,6 +48,7 @@ class CronController extends Controller
                 $user->balance += $interest;
                 $user->save();
 
+                
                 $transaction = new Transaction();
                 $transaction->user_id = $user->id;
                 $transaction->amount = $interest;
@@ -57,7 +58,6 @@ class CronController extends Controller
                 $transaction->remarks = 'per_dps_interest_added';
                 $transaction->trx = trxGenerator();
                 $transaction->save();
-                
 
                 $installment = new Installment();
                 $installment->user_id = $user->id;

@@ -75,7 +75,7 @@
                             <input type="number" name="per_installment" id="perInstallment" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="interestRate d-block">Interest Rate</label>
+                            <label for="interestRate">Interest Rate</label>
                             <input type="number" name="interest_rate" id="interestRate" class="form-control">
                         </div>
                     </div>

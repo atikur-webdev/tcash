@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn user-navbar" data-wow-delay="0.1s">
+<nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn user-navbar" data-wow-delay="0.1s" style="z-index: 1">
     <a href="{{ route('user.dashboard') }}" class="navbar-brand ms-4 ms-lg-0">
         <h1 class="display-5 text-primary m-0">Finanza</h1>
     </a>
